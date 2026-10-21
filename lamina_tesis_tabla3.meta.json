@@ -1,8 +1,0 @@
-{
-  "fuente": "Tesis Tabla 3 'Propiedades estándar de fibras'. Los valores de vidrio, boro y carbono 181 GPa coinciden con la tabla clásica de propiedades de lámina de Kaw (Mechanics of Composite Materials, Tabla 2.1: Scotchply 1002, B4/5505, T300/5208). Verificar página.",
-  "base_estadistica": "típica (media), NO B-basis",
-  "problemas_conocidos": [
-    "El 'Carbon HM' de 181 GPa es T300/5208, fibra de módulo estándar."
-  ],
-  "uso": "Fase 1 en adelante solo como dato de prueba; sustituir por valores admisibles (NCAMP/CMH-17)."
-}

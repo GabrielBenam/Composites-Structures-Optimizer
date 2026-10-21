@@ -12,4 +12,4 @@ Verificar es comprobar que el código resuelve bien las ecuaciones. Validar es c
 | V5 Validación con datos publicados | Ensayos de vigas I compuestas en la literatura (p. ej., Zhou y Hood, 2006) | Dentro de la dispersión experimental reportada |
 | V6 Decisión | Estabilidad del ranking (Monte Carlo sobre pesos, costos y volumen); comparación TOPSIS contra suma ponderada | Se reporta la frecuencia de primer lugar; un ganador por debajo del 60 % se declara no concluyente |
 
-Estado en la Fase 0: V0 y V2 cumplidos para cargas y matriz de decisión.
+Estado: V0 y V2 cumplidos para cargas y matriz de decisión (Fase 0). V1 y V2 en curso para lámina y laminado (Bloque A): 267 comparaciones contra Kaw y Gay dentro de tolerancia; 144 de ellas recalculadas en MATLAB, con diferencia contra Python del orden de 1e-15.

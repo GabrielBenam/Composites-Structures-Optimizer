@@ -6,6 +6,14 @@ Cada fase cierra con tres entregables: código Python con pruebas, el equivalent
 
 Datos con fuente, reproducción de la Tabla 19 y de las Tablas 22 y 23, diagnóstico de cargas y línea base corregida. Ver `docs/fase0_reporte.md`.
 
+## Bloques de ejemplos resueltos (verificación del núcleo)
+
+Cada bloque reúne los ejemplos de Gay y los equivalentes de Kaw, Barbero y Voyiadjis sobre un tema, más los cruces entre libros. Se generan con `python -m cpo.informe <bloque>` y el PDF sale de GitHub Actions.
+
+**Bloque A, lámina y laminado (en curso).** Entregado: Kaw 2.5–2.9, 2.11, 2.13, 2.14 (con Tabla 2.3), 2.17–2.20, 4.1–4.7 y 5.1; Gay 19.10 (partes 1 y 2a) y 19.14. Son 267 comparaciones dentro de tolerancia, con 2 erratas documentadas (Kaw 2.8, galgas B y C). Pendiente: Kaw cap. 3 (micromecánica, 19 ejemplos); Gay 3.3.3, 5.4.1.2, 18.2, 18.14, 19.2, 19.3, 19.9, 19.11, 19.13 y Apéndice A; Barbero cap. 4 a 6 (28 ejemplos); Voyiadjis cap. 2 a 9.
+
+**Bloques siguientes:** B falla y laminado óptimo; C vigas de cualquier sección; D placas y pandeo; E sándwich; F uniones; G termoelasticidad; H tubos y recipientes; I varios. Gay 19.10 inciso 2b (pandeo) se resuelve en el Bloque D.
+
 ## Fase 1. Vigas de pared delgada (alcance inicial)
 
 Larguero I, C y Z de sección constante bajo flexión y cortante. Comprende la teoría clásica de laminados (matriz ABD) por pared, la rigidez de la sección de pared delgada, los esfuerzos por capa, los criterios de falla con factor de reserva (esfuerzo máximo, Tsai-Hill, Tsai-Wu y Hashin), el pandeo local de patín y alma, y las cargas según ASTM F2245 con el diagrama V-n.

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "cpo"
-version = "0.0.1"
+version = "0.1.0"
 description = "Diseño preliminar y optimización de estructuras aeronáuticas básicas en materiales compuestos"
 readme = "README.md"
 license = {text = "GPL-3.0-or-later"}

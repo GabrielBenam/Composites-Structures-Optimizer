@@ -1,6 +1,0 @@
-material,vf,E1_GPa,E2_GPa,nu12,G12_GPa,Xt_MPa,Xc_MPa,Yt_MPa,Yc_MPa,S12_MPa
-Glass/Epoxy,0.45,38.6,8.27,0.26,4.14,1062,610,31,118,72
-Boron/Epoxy,0.5,204,18.5,0.23,5.59,1260,2500,61,202,67
-Carbon/Epoxy 181GPa (rotulado 'HM' en tesis),0.7,181,10.3,0.28,7.17,1500,1500,40,246,68
-Carbon/Epoxy 138GPa (rotulado 'MM'),0.66,138,8.96,0.3,7.1,1447,1447,51.7,206,93
-Aramid/Epoxy,0.6,76,5.5,0.34,2.3,1400,235,12,53,34
