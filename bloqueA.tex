@@ -1,0 +1,905 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\IfFileExists{lmodern.sty}{\usepackage{lmodern}}{}
+\usepackage[spanish,es-noshorthands,es-nodecimaldot]{babel}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs,longtable}
+\usepackage[hidelinks]{hyperref}
+\allowdisplaybreaks
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+
+\title{Ejemplos resueltos\\ Bloque A: lámina y laminado}
+\author{Proyecto cpo (GPL-3.0)}
+\date{\today}
+\begin{document}\maketitle
+\section*{Cómo leer este documento}
+Cada ejemplo reproduce un problema publicado en la bibliografía. El planteamiento está redactado con palabras propias y cita la página de origen; las figuras se indican como \textit{[Imagen: libro, figura, página]} para insertarlas en la versión final. Cada solución muestra la ecuación simbólica, la sustitución y el resultado, y termina con una tabla que compara el valor del libro contra el calculado por el programa. Una diferencia mayor que la tolerancia declarada hace fallar las pruebas automáticas del repositorio. Cuando el valor impreso en el libro es incorrecto se marca como \textit{errata} y se explica.
+\paragraph{Resultado global.} 267 de 267 comparaciones dentro de tolerancia en 22 ejemplos.
+\begin{longtable}{lrrrl}\toprule Ejemplo & Comparaciones & Dif. máx. (\%) & Erratas & Estado \\ \midrule\endhead
+\hyperref[ej:kaw_2_5]{Kaw 2.5} & 18 & 0.03 & 0 & completo \\
+\hyperref[ej:kaw_2_6]{Kaw 2.6} & 12 & 0.04 & 0 & completo \\
+\hyperref[ej:kaw_2_7]{Kaw 2.7} & 31 & 0.04 & 0 & completo \\
+\hyperref[ej:kaw_2_8]{Kaw 2.8} & 6 & 0.01 & 2 & completo \\
+\hyperref[ej:kaw_2_9]{Kaw 2.9} & 6 & 0.02 & 0 & completo \\
+\hyperref[ej:kaw_2_11]{Kaw 2.11} & 8 & 0.01 & 0 & completo \\
+\hyperref[ej:kaw_2_13]{Kaw 2.13} & 4 & 0.02 & 0 & completo \\
+\hyperref[ej:kaw_2_14]{Kaw 2.14 y Tabla 2.3} & 14 & 0.00 & 0 & completo \\
+\hyperref[ej:kaw_2_17]{Kaw 2.17} & 6 & 0.02 & 0 & completo \\
+\hyperref[ej:kaw_2_18]{Kaw 2.18} & 2 & 0.02 & 0 & completo \\
+\hyperref[ej:kaw_2_19]{Kaw 2.19} & 8 & 0.02 & 0 & completo \\
+\hyperref[ej:kaw_2_20]{Kaw 2.20} & 9 & 0.04 & 0 & completo \\
+\hyperref[ej:kaw_4_1]{Kaw 4.1} & 3 & 0.02 & 0 & completo \\
+\hyperref[ej:kaw_4_2]{Kaw 4.2} & 18 & 0.03 & 0 & completo \\
+\hyperref[ej:kaw_4_3]{Kaw 4.3} & 23 & 0.03 & 0 & completo \\
+\hyperref[ej:kaw_4_4]{Kaw 4.4} & 18 & 0.20 & 0 & completo \\
+\hyperref[ej:kaw_4_5]{Kaw 4.5} & 22 & 0.04 & 0 & completo \\
+\hyperref[ej:kaw_4_6]{Kaw 4.6} & 8 & 0.02 & 0 & completo \\
+\hyperref[ej:kaw_4_7]{Kaw 4.7} & 2 & 0.01 & 0 & completo \\
+\hyperref[ej:kaw_5_1]{Kaw 5.1} & 16 & 0.04 & 0 & completo \\
+\hyperref[ej:gay_19_10]{Gay 19.10} & 28 & 6.31 & 0 & completo \\
+\hyperref[ej:gay_19_14]{Gay 19.14} & 5 & 0.00 & 0 & completo \\
+\bottomrule\end{longtable}
+\paragraph{Convenciones.} Ejes de la capa 1-2 (en Gay, $\ell$-$t$); ejes globales $x$-$y$; $\theta$ de $x$ hacia 1; deformaciones cortantes ingenieriles; capas numeradas de arriba hacia abajo con $z$ positiva hacia abajo (Kaw). Las rigideces $E_{ij}$ de Gay equivalen a $\bar Q_{ij}$.
+\tableofcontents\clearpage
+\part*{Kaw}\addcontentsline{toc}{part}{Kaw}
+\section{Kaw 2.5: flexibilidad y rigidez 3D de una lámina ortótropa}\label{ej:kaw_2_5}
+\textbf{Fuente:} Kaw (2006), Ejemplo 2.5, p.~98.
+
+\paragraph{Planteamiento.} Se pide la matriz de flexibilidad $[S]$ y la de rigidez $[C]$ (6$\times$6) de una lámina de grafito/epóxica tratada como sólido ortótropo, con nueve constantes ingenieriles dadas.
+
+\paragraph{Solución.}
+Datos: $E_1=181$, $E_2=E_3=10.3$ GPa; $\nu_{12}=0.28$, $\nu_{23}=0.60$, $\nu_{13}=0.27$; $G_{12}=7.17$, $G_{23}=3.0$, $G_{31}=7.0$ GPa.
+
+\textit{Paso 1.} Los términos de $[S]$ son inversos de módulos o cocientes de Poisson entre módulos (orden de Voigt 1, 2, 3, 23, 31, 12).
+\begin{align*}
+&S_{11}=\frac{1}{E_1},\; S_{12}=-\frac{\nu_{12}}{E_1},\; S_{13}=-\frac{\nu_{13}}{E_1},\; S_{23}=-\frac{\nu_{23}}{E_2},\; S_{44}=\frac{1}{G_{23}},\; S_{55}=\frac{1}{G_{31}},\; S_{66}=\frac{1}{G_{12}} \\
+&[S]=\begin{bmatrix}5.525 & -1.547 & -1.492 & 0 & 0 & 0 \\ -1.547 & 97.09 & -58.25 & 0 & 0 & 0 \\ -1.492 & -58.25 & 97.09 & 0 & 0 & 0 \\ 0 & 0 & 0 & 333.3 & 0 & 0 \\ 0 & 0 & 0 & 0 & 142.9 & 0 \\ 0 & 0 & 0 & 0 & 0 & 139.5\end{bmatrix}\times10^{-12}\ \mathrm{Pa^{-1}}
+\end{align*}
+\textit{Paso 2.} La rigidez es la inversa de la flexibilidad.
+\begin{align*}
+&[C]=[S]^{-1} \\
+&[C]=\begin{bmatrix}185.0 & 7.270 & 7.204 & 0 & 0 & 0 \\ 7.270 & 16.38 & 9.939 & 0 & 0 & 0 \\ 7.204 & 9.939 & 16.37 & 0 & 0 & 0 \\ 0 & 0 & 0 & 3.000 & 0 & 0 \\ 0 & 0 & 0 & 0 & 7.000 & 0 \\ 0 & 0 & 0 & 0 & 0 & 7.170\end{bmatrix}\ \mathrm{GPa}
+\end{align*}
+\paragraph{Comparación con el libro.}
+\begin{longtable}{lrrrc}\toprule Magnitud & Libro & Calculado & Dif. (\%) & \\ \midrule\endhead
+$S_{11}$ [$\mathrm{Pa^{-1}}$] & $5.525\times10^{-12}$ & $5.525\times10^{-12}$ & 0.00 & \checkmark \\
+$S_{22}$ [$\mathrm{Pa^{-1}}$] & $9.709\times10^{-11}$ & $9.709\times10^{-11}$ & 0.00 & \checkmark \\
+$S_{33}$ [$\mathrm{Pa^{-1}}$] & $9.709\times10^{-11}$ & $9.709\times10^{-11}$ & 0.00 & \checkmark \\
+$S_{12}$ [$\mathrm{Pa^{-1}}$] & $-1.547\times10^{-12}$ & $-1.547\times10^{-12}$ & 0.00 & \checkmark \\
+$S_{13}$ [$\mathrm{Pa^{-1}}$] & $-1.492\times10^{-12}$ & $-1.492\times10^{-12}$ & 0.02 & \checkmark \\
+$S_{23}$ [$\mathrm{Pa^{-1}}$] & $-5.825\times10^{-11}$ & $-5.825\times10^{-11}$ & 0.00 & \checkmark \\
+$S_{44}$ [$\mathrm{Pa^{-1}}$] & $3.333\times10^{-10}$ & $3.333\times10^{-10}$ & 0.01 & \checkmark \\
+$S_{55}$ [$\mathrm{Pa^{-1}}$] & $1.429\times10^{-10}$ & $1.429\times10^{-10}$ & 0.03 & \checkmark \\
+$S_{66}$ [$\mathrm{Pa^{-1}}$] & $1.395\times10^{-10}$ & $1.395\times10^{-10}$ & 0.02 & \checkmark \\
+$C_{11}$ [$\mathrm{Pa}$] & $1.850\times10^{11}$ & $1.850\times10^{11}$ & 0.01 & \checkmark \\
+$C_{12}$ [$\mathrm{Pa}$] & $7.269\times10^{9}$ & $7.270\times10^{9}$ & 0.01 & \checkmark \\
+$C_{13}$ [$\mathrm{Pa}$] & $7.204\times10^{9}$ & $7.204\times10^{9}$ & 0.00 & \checkmark \\
+$C_{22}$ [$\mathrm{Pa}$] & $1.638\times10^{10}$ & $1.638\times10^{10}$ & 0.00 & \checkmark \\
+$C_{23}$ [$\mathrm{Pa}$] & $9.938\times10^{9}$ & $9.939\times10^{9}$ & 0.01 & \checkmark \\
+$C_{33}$ [$\mathrm{Pa}$] & $1.637\times10^{10}$ & $1.637\times10^{10}$ & 0.03 & \checkmark \\
+$C_{44}$ [$\mathrm{Pa}$] & $3.000\times10^{9}$ & $3.000\times10^{9}$ & 0.00 & \checkmark \\
+$C_{55}$ [$\mathrm{Pa}$] & $6.998\times10^{9}$ & $7.000\times10^{9}$ & 0.03 & \checkmark \\
+$C_{66}$ [$\mathrm{Pa}$] & $7.168\times10^{9}$ & $7.170\times10^{9}$ & 0.03 & \checkmark \\
+\bottomrule\end{longtable}
+
+\clearpage
+\section{Kaw 2.6: lámina unidireccional en esfuerzo plano}\label{ej:kaw_2_6}
+\textbf{Fuente:} Kaw (2006), Ejemplo 2.6, p.~105.
+
+\paragraph{Planteamiento.} Para una lámina unidireccional de grafito/epóxica se piden la flexibilidad reducida, el Poisson menor, la rigidez reducida y las deformaciones locales bajo $\sigma_1=2$, $\sigma_2=-3$, $\tau_{12}=4$ MPa.
+
+\paragraph{Solución.}
+Propiedades: Tabla 2.1 de Kaw (grafito/epóxica: $E_1=181$ GPa, $E_2=10.3$ GPa, $\nu_{12}=0.28$, $G_{12}=7.17$ GPa).
+
+\textit{Paso 1.} Flexibilidad reducida en ejes del material.
+\begin{align*}
+&[S]=\begin{bmatrix}1/E_1 & -\nu_{12}/E_1 & 0\\ -\nu_{12}/E_1 & 1/E_2 & 0\\ 0&0&1/G_{12}\end{bmatrix} \\
+&[S]=\begin{bmatrix}5.525 & -1.547 & 0 \\ -1.547 & 97.09 & 0 \\ 0 & 0 & 139.5\end{bmatrix}\times10^{-12}\ \mathrm{Pa^{-1}}
+\end{align*}
+\textit{Paso 2.} Poisson menor por reciprocidad.
+\begin{align*}
+&\nu_{21}=\nu_{12}\,\frac{E_2}{E_1} \\
+&\nu_{21}=0.28\cdot\frac{10.3}{181}=0.01593
+\end{align*}
+\textit{Paso 3.} Rigidez reducida.
+\begin{align*}
+&Q_{11}=\frac{E_1}{1-\nu_{12}\nu_{21}},\ Q_{12}=\frac{\nu_{12}E_2}{1-\nu_{12}\nu_{21}} \\
+&Q_{22}=\frac{E_2}{1-\nu_{12}\nu_{21}},\ Q_{66}=G_{12} \\
+&[Q]=\begin{bmatrix}181.8 & 2.897 & 0 \\ 2.897 & 10.35 & 0 \\ 0 & 0 & 7.170\end{bmatrix}\ \mathrm{GPa}
+\end{align*}
+\textit{Paso 4.} Deformaciones locales.
+\begin{align*}
+&\{\varepsilon\}_{12}=[S]\{\sigma\}_{12} \\
+&\{\varepsilon\}_{12}=\begin{bmatrix}15.69 \\ -294.4 \\ 557.9\end{bmatrix}\ \mu\mathrm{m/m}
+\end{align*}
+\paragraph{Comparación con el libro.}
+\begin{longtable}{lrrrc}\toprule Magnitud & Libro & Calculado & Dif. (\%) & \\ \midrule\endhead
+$S_{11}$ [$\mathrm{Pa^{-1}}$] & $5.525\times10^{-12}$ & $5.525\times10^{-12}$ & 0.00 & \checkmark \\
+$S_{12}$ [$\mathrm{Pa^{-1}}$] & $-1.547\times10^{-12}$ & $-1.547\times10^{-12}$ & 0.00 & \checkmark \\
+$S_{22}$ [$\mathrm{Pa^{-1}}$] & $9.709\times10^{-11}$ & $9.709\times10^{-11}$ & 0.00 & \checkmark \\
+$S_{66}$ [$\mathrm{Pa^{-1}}$] & $1.395\times10^{-10}$ & $1.395\times10^{-10}$ & 0.02 & \checkmark \\
+$\nu_{21}$  & $0.01593$ & $0.01593$ & 0.02 & \checkmark \\
+$Q_{11}$ [$\mathrm{Pa}$] & $1.818\times10^{11}$ & $1.818\times10^{11}$ & 0.01 & \checkmark \\
+$Q_{12}$ [$\mathrm{Pa}$] & $2.897\times10^{9}$ & $2.897\times10^{9}$ & 0.00 & \checkmark \\
+$Q_{22}$ [$\mathrm{Pa}$] & $1.035\times10^{10}$ & $1.035\times10^{10}$ & 0.04 & \checkmark \\
+$Q_{66}$ [$\mathrm{Pa}$] & $7.170\times10^{9}$ & $7.170\times10^{9}$ & 0.00 & \checkmark \\
+$\varepsilon_1$  & $1.569\times10^{-5}$ & $1.569\times10^{-5}$ & 0.00 & \checkmark \\
+$\varepsilon_2$  & $-2.944\times10^{-4}$ & $-2.944\times10^{-4}$ & 0.01 & \checkmark \\
+$\gamma_{12}$  & $5.579\times10^{-4}$ & $5.579\times10^{-4}$ & 0.00 & \checkmark \\
+\bottomrule\end{longtable}
+\begin{itemize}\small
+\item $Q_{66}$: La matriz impresa muestra 7.117 GPa; el texto da 7.17 GPa (errata tipográfica).
+\end{itemize}
+
+\clearpage
+\section{Kaw 2.7: lámina a 60\ensuremath{^\circ} bajo esfuerzos en el plano}\label{ej:kaw_2_7}
+\textbf{Fuente:} Kaw (2006), Ejemplo 2.7, p.~113.
+
+\paragraph{Planteamiento.} Una lámina de grafito/epóxica a 60\ensuremath{^\circ} recibe $\sigma_x=2$, $\sigma_y=-3$, $\tau_{xy}=4$ MPa. Se piden $[\bar S]$, $[\bar Q]$, deformaciones globales y locales, esfuerzos locales, y valores principales de esfuerzo y deformación.
+
+\paragraph{Solución.}
+\begin{center}\fbox{\parbox{0.9\linewidth}{\centering\small [Imagen: Kaw (2006), Figura 2.21, p. 113 — lámina a 60\ensuremath{^\circ} con los esfuerzos aplicados]}}\end{center}
+
+\textit{Paso 1.} Matriz de transformación de esfuerzos con $c=\cos 60^\circ$, $s=\sin 60^\circ$.
+\begin{align*}
+&[T]=\begin{bmatrix}c^2 & s^2 & 2sc\\ s^2 & c^2 & -2sc\\ -sc & sc & c^2-s^2\end{bmatrix} \\
+&[T]=\begin{bmatrix}0.2500 & 0.7500 & 0.8660 \\ 0.7500 & 0.2500 & -0.8660 \\ -0.4330 & 0.4330 & -0.5000\end{bmatrix}
+\end{align*}
+\textit{Paso 2.} Flexibilidad y rigidez transformadas.
+\begin{align*}
+&[\bar S]=[R][T]^{-1}[R]^{-1}[S][T],\qquad [\bar Q]=[T]^{-1}[Q][R][T][R]^{-1} \\
+&[\bar S]=\begin{bmatrix}80.53 & -7.878 & -32.34 \\ -7.878 & 34.75 & -46.96 \\ -32.34 & -46.96 & 114.1\end{bmatrix}\times10^{-12}\ \mathrm{Pa^{-1}} \\
+&[\bar Q]=\begin{bmatrix}23.65 & 32.46 & 20.05 \\ 32.46 & 109.4 & 54.19 \\ 20.05 & 54.19 & 36.74\end{bmatrix}\ \mathrm{GPa}
+\end{align*}
+\textit{Paso 3.} Deformaciones globales, locales y esfuerzos locales.
+\begin{align*}
+&\{\varepsilon\}_{xy}=[\bar S]\{\sigma\}_{xy},\ \{\varepsilon\}_{12}=[R][T][R]^{-1}\{\varepsilon\}_{xy} \\
+&\{\sigma\}_{12}=[T]\{\sigma\}_{xy} \\
+&\{\varepsilon\}_{xy}=\begin{bmatrix}55.34 \\ -307.8 \\ 532.8\end{bmatrix}\ \mu\mathrm{m/m} \\
+&\{\varepsilon\}_{12}=\begin{bmatrix}13.67 \\ -266.2 \\ -580.9\end{bmatrix}\ \mu\mathrm{m/m} \\
+&\{\sigma\}_{12}=\begin{bmatrix}1.714 \\ -2.714 \\ -4.165\end{bmatrix}\ \mathrm{MPa}
+\end{align*}
+\textit{Paso 4.} Esfuerzos principales y cortante máximo (círculo de Mohr).
+\begin{align*}
+&\sigma_{\max,\min}=\frac{\sigma_x+\sigma_y}{2}\pm\sqrt{\Big(\frac{\sigma_x-\sigma_y}{2}\Big)^2+\tau_{xy}^2} \\
+&\theta_p=\tfrac12\tan^{-1}\frac{2\tau_{xy}}{\sigma_x-\sigma_y} \\
+&\sigma_{\max}=4.217,\ \sigma_{\min}=-5.217\ \mathrm{MPa},\ \theta_p=29.00^\circ,\ \tau_{\max}=4.717\ \mathrm{MPa} \\
+&\theta_s=-16.00^\circ
+\end{align*}
+\textit{Paso 5.} Deformaciones principales; los ejes principales de deformación no coinciden con los de esfuerzo ni con los del material, a diferencia de un material isótropo.
+\begin{align*}
+&\varepsilon_{\max,\min}=\frac{\varepsilon_x+\varepsilon_y}{2}\pm\sqrt{\Big(\frac{\varepsilon_x-\varepsilon_y}{2}\Big)^2+\Big(\frac{\gamma_{xy}}{2}\Big)^2} \\
+&\varepsilon_{\max}=1.961\times10^{-4},\ \varepsilon_{\min}=-4.486\times10^{-4},\ \theta_p=27.86^\circ \\
+&\gamma_{\max}=6.448\times10^{-4},\ \theta_s=-17.14^\circ
+\end{align*}
+\paragraph{Comparación con el libro.}
+\begin{longtable}{lrrrc}\toprule Magnitud & Libro & Calculado & Dif. (\%) & \\ \midrule\endhead
+$\bar S_{11}$ [$\mathrm{Pa^{-1}}$] & $8.053\times10^{-11}$ & $8.053\times10^{-11}$ & 0.00 & \checkmark \\
+$\bar S_{12}$ [$\mathrm{Pa^{-1}}$] & $-7.878\times10^{-12}$ & $-7.878\times10^{-12}$ & 0.00 & \checkmark \\
+$\bar S_{16}$ [$\mathrm{Pa^{-1}}$] & $-3.234\times10^{-11}$ & $-3.234\times10^{-11}$ & 0.01 & \checkmark \\
+$\bar S_{22}$ [$\mathrm{Pa^{-1}}$] & $3.475\times10^{-11}$ & $3.475\times10^{-11}$ & 0.01 & \checkmark \\
+$\bar S_{26}$ [$\mathrm{Pa^{-1}}$] & $-4.696\times10^{-11}$ & $-4.696\times10^{-11}$ & 0.00 & \checkmark \\
+$\bar S_{66}$ [$\mathrm{Pa^{-1}}$] & $1.141\times10^{-10}$ & $1.141\times10^{-10}$ & 0.04 & \checkmark \\
+$\bar Q_{11}$ [$\mathrm{Pa}$] & $2.365\times10^{10}$ & $2.365\times10^{10}$ & 0.01 & \checkmark \\
+$\bar Q_{12}$ [$\mathrm{Pa}$] & $3.246\times10^{10}$ & $3.246\times10^{10}$ & 0.01 & \checkmark \\
+$\bar Q_{16}$ [$\mathrm{Pa}$] & $2.005\times10^{10}$ & $2.005\times10^{10}$ & 0.02 & \checkmark \\
+$\bar Q_{22}$ [$\mathrm{Pa}$] & $1.094\times10^{11}$ & $1.094\times10^{11}$ & 0.02 & \checkmark \\
+$\bar Q_{26}$ [$\mathrm{Pa}$] & $5.419\times10^{10}$ & $5.419\times10^{10}$ & 0.01 & \checkmark \\
+$\bar Q_{66}$ [$\mathrm{Pa}$] & $3.674\times10^{10}$ & $3.674\times10^{10}$ & 0.01 & \checkmark \\
+$\varepsilon_x$  & $5.534\times10^{-5}$ & $5.534\times10^{-5}$ & 0.00 & \checkmark \\
+$\varepsilon_y$  & $-3.078\times10^{-4}$ & $-3.078\times10^{-4}$ & 0.01 & \checkmark \\
+$\gamma_{xy}$  & $5.328\times10^{-4}$ & $5.328\times10^{-4}$ & 0.00 & \checkmark \\
+$\varepsilon_1$  & $1.367\times10^{-5}$ & $1.367\times10^{-5}$ & 0.01 & \checkmark \\
+$\varepsilon_2$  & $-2.662\times10^{-4}$ & $-2.662\times10^{-4}$ & 0.02 & \checkmark \\
+$\gamma_{12}$  & $-5.809\times10^{-4}$ & $-5.809\times10^{-4}$ & 0.00 & \checkmark \\
+$\sigma_1$  & $1.714\times10^{6}$ & $1.714\times10^{6}$ & 0.01 & \checkmark \\
+$\sigma_2$  & $-2.714\times10^{6}$ & $-2.714\times10^{6}$ & 0.00 & \checkmark \\
+$\tau_{12}$  & $-4.165\times10^{6}$ & $-4.165\times10^{6}$ & 0.00 & \checkmark \\
+$\sigma_{\max}$  & $4.217\times10^{6}$ & $4.217\times10^{6}$ & 0.00 & \checkmark \\
+$\sigma_{\min}$  & $-5.217\times10^{6}$ & $-5.217\times10^{6}$ & 0.00 & \checkmark \\
+$\theta_p$  & $29.00$ & $29.00$ & 0.01 & \checkmark \\
+$\tau_{\max}$  & $4.717\times10^{6}$ & $4.717\times10^{6}$ & 0.00 & \checkmark \\
+$\varepsilon_{\max}$  & $1.962\times10^{-4}$ & $1.961\times10^{-4}$ & 0.03 & \checkmark \\
+$\varepsilon_{\min}$  & $-4.486\times10^{-4}$ & $-4.486\times10^{-4}$ & 0.01 & \checkmark \\
+$\theta_{p,\varepsilon}$  & $27.86$ & $27.86$ & 0.00 & \checkmark \\
+$\gamma_{\max}$  & $6.448\times10^{-4}$ & $6.448\times10^{-4}$ & 0.00 & \checkmark \\
+$\theta_{s,\varepsilon}$  & $-17.14$ & $-17.14$ & 0.00 & \checkmark \\
+$\theta_s$  & $-16.00$ & $-16.00$ & 0.02 & \checkmark \\
+\bottomrule\end{longtable}
+\begin{itemize}\small
+\item $\theta_s$: El signo no es legible en el texto del libro; la ec. 2.110 da un valor negativo.
+\end{itemize}
+
+\clearpage
+\section{Kaw 2.8: lecturas de una roseta de galgas en una lámina a 60\ensuremath{^\circ}}\label{ej:kaw_2_8}
+\textbf{Fuente:} Kaw (2006), Ejemplo 2.8, p.~119.
+
+\paragraph{Planteamiento.} La lámina de grafito/epóxica a 60\ensuremath{^\circ} recibe solo $\tau_{xy}=2$ MPa. Se piden las deformaciones que leerían tres galgas a 0\ensuremath{^\circ}, 240\ensuremath{^\circ} y 120\ensuremath{^\circ} del eje $x$.
+
+\paragraph{Solución.}
+\begin{center}\fbox{\parbox{0.9\linewidth}{\centering\small [Imagen: Kaw (2006), Figura 2.22, p. 119 — roseta de galgas A, B, C sobre la lámina]}}\end{center}
+
+\textit{Paso 1.} Deformaciones globales con la flexibilidad transformada del ejemplo 2.7.
+\begin{align*}
+&\{\varepsilon\}_{xy}=[\bar S]\{0,0,\tau_{xy}\}^T \\
+&\{\varepsilon\}_{xy}=\begin{bmatrix}-6.468\times10^{-5} \\ -9.392\times10^{-5} \\ 2.283\times10^{-4}\end{bmatrix}
+\end{align*}
+\textit{Paso 2.} Lectura de cada galga a un ángulo $\varphi$ del eje $x$.
+\begin{align*}
+&\varepsilon_\varphi=\varepsilon_x\cos^2\varphi+\varepsilon_y\sin^2\varphi+\gamma_{xy}\sin\varphi\cos\varphi \\
+&\varepsilon_A=-6.468\times10^{-5},\ \varepsilon_B=1.225\times10^{-5},\ \varepsilon_C=-1.855\times10^{-4}
+\end{align*}
+Comprobación independiente: la deformación principal máxima es $3.578\times10^{-5}$, menor que la lectura impresa para la galga B; por eso se conserva el resultado de la ecuación y se reporta la discrepancia.
+
+\paragraph{Comparación con el libro.}
+\begin{longtable}{lrrrc}\toprule Magnitud & Libro & Calculado & Dif. (\%) & \\ \midrule\endhead
+$\varepsilon_x$  & $-6.468\times10^{-5}$ & $-6.468\times10^{-5}$ & 0.01 & \checkmark \\
+$\varepsilon_y$  & $-9.392\times10^{-5}$ & $-9.392\times10^{-5}$ & 0.00 & \checkmark \\
+$\gamma_{xy}$  & $2.283\times10^{-4}$ & $2.283\times10^{-4}$ & 0.00 & \checkmark \\
+$\varepsilon_A$  & $-6.468\times10^{-5}$ & $-6.468\times10^{-5}$ & 0.01 & \checkmark \\
+$\varepsilon_B$  & $1.724\times10^{-4}$ & $1.225\times10^{-5}$ & 92.90 & errata \\
+$\varepsilon_C$  & $1.083\times10^{-5}$ & $-1.855\times10^{-4}$ & 1812.46 & errata \\
+\bottomrule\end{longtable}
+\begin{itemize}\small
+\item $\varepsilon_B$: Errata probable del libro: el valor impreso supera la deformación principal máxima (3.578e-05), lo que es físicamente imposible; la ecuación B.15 del propio libro da el valor calculado.
+\item $\varepsilon_C$: Errata probable del libro: el valor impreso supera la deformación principal máxima (3.578e-05), lo que es físicamente imposible; la ecuación B.15 del propio libro da el valor calculado.
+\end{itemize}
+
+\clearpage
+\section{Kaw 2.9: constantes ingenieriles de una lámina a 60\ensuremath{^\circ}}\label{ej:kaw_2_9}
+\textbf{Fuente:} Kaw (2006), Ejemplo 2.9, p.~126.
+
+\paragraph{Planteamiento.} Se piden $E_x$, $\nu_{xy}$, $m_x$, $E_y$, $m_y$ y $G_{xy}$ de la lámina de grafito/epóxica a 60\ensuremath{^\circ}.
+
+\paragraph{Solución.}
+\textit{Paso 1.} Cada constante sale de un término de $[\bar S]$; $m_x$ y $m_y$ miden el acoplamiento entre esfuerzo normal y deformación cortante.
+\begin{align*}
+&E_x=\frac{1}{\bar S_{11}},\ \nu_{xy}=-\frac{\bar S_{12}}{\bar S_{11}},\ \frac{1}{m_x}=-\frac{1}{\bar S_{16}E_1} \\
+&E_y=\frac{1}{\bar S_{22}},\ \frac{1}{m_y}=-\frac{1}{\bar S_{26}E_1},\ G_{xy}=\frac{1}{\bar S_{66}} \\
+&E_x=12.42\ \mathrm{GPa},\ \nu_{xy}=0.09783,\ m_x=5.853,\ E_y=28.78\ \mathrm{GPa},\ m_y=8.499,\ G_{xy}=8.761\ \mathrm{GPa}
+\end{align*}
+\paragraph{Comparación con el libro.}
+\begin{longtable}{lrrrc}\toprule Magnitud & Libro & Calculado & Dif. (\%) & \\ \midrule\endhead
+$E_x$  & $1.242\times10^{10}$ & $1.242\times10^{10}$ & 0.02 & \checkmark \\
+$\nu_{xy}$  & $0.09783$ & $0.09783$ & 0.00 & \checkmark \\
+$m_x$  & $5.854$ & $5.853$ & 0.02 & \checkmark \\
+$E_y$  & $2.878\times10^{10}$ & $2.878\times10^{10}$ & 0.00 & \checkmark \\
+$m_y$  & $8.499$ & $8.499$ & 0.00 & \checkmark \\
+$G_{xy}$  & $8.761\times10^{9}$ & $8.761\times10^{9}$ & 0.00 & \checkmark \\
+\bottomrule\end{longtable}
+
+\clearpage
+\section{Kaw 2.11: invariantes de rigidez y flexibilidad}\label{ej:kaw_2_11}
+\textbf{Fuente:} Kaw (2006), Ejemplo 2.11, p.~135.
+
+\paragraph{Planteamiento.} Se piden los cuatro invariantes de rigidez $U_i$ y los cuatro de flexibilidad $V_i$ del grafito/epóxica.
+
+\paragraph{Solución.}
+\textit{Paso 1.} Invariantes de rigidez: no dependen del ángulo de la lámina.
+\begin{align*}
+&U_1=\tfrac18(3Q_{11}+3Q_{22}+2Q_{12}+4Q_{66}),\ U_2=\tfrac12(Q_{11}-Q_{22}),\ U_3=\tfrac18(Q_{11}+Q_{22}-2Q_{12}-4Q_{66}) \\
+&U_4=\tfrac18(Q_{11}+Q_{22}+6Q_{12}-4Q_{66}) \\
+&U_1=76.37, U_2=85.73, U_3=19.71, U_4=22.61\ \mathrm{GPa}
+\end{align*}
+\textit{Paso 2.} Invariantes de flexibilidad.
+\begin{align*}
+&V_1=\tfrac18(3S_{11}+3S_{22}+2S_{12}+S_{66}),\ V_2=\tfrac12(S_{11}-S_{22}),\ V_3=\tfrac18(S_{11}+S_{22}-2S_{12}-S_{66}) \\
+&V_4=\tfrac18(S_{11}+S_{22}+6S_{12}-S_{66}) \\
+&V_1=5.553\times10^{-11}, V_2=-4.578\times10^{-11}, V_3=-4.220\times10^{-12}, V_4=-5.767\times10^{-12}\ \mathrm{Pa^{-1}}
+\end{align*}
+\paragraph{Comparación con el libro.}
+\begin{longtable}{lrrrc}\toprule Magnitud & Libro & Calculado & Dif. (\%) & \\ \midrule\endhead
+$U_1$  & $7.637\times10^{10}$ & $7.637\times10^{10}$ & 0.00 & \checkmark \\
+$U_2$  & $8.573\times10^{10}$ & $8.573\times10^{10}$ & 0.00 & \checkmark \\
+$U_3$  & $1.971\times10^{10}$ & $1.971\times10^{10}$ & 0.00 & \checkmark \\
+$U_4$  & $2.261\times10^{10}$ & $2.261\times10^{10}$ & 0.01 & \checkmark \\
+$V_1$  & $5.553\times10^{-11}$ & $5.553\times10^{-11}$ & 0.01 & \checkmark \\
+$V_2$  & $-4.578\times10^{-11}$ & $-4.578\times10^{-11}$ & 0.00 & \checkmark \\
+$V_3$  & $-4.220\times10^{-12}$ & $-4.220\times10^{-12}$ & 0.01 & \checkmark \\
+$V_4$  & $-5.767\times10^{-12}$ & $-5.767\times10^{-12}$ & 0.01 & \checkmark \\
+\bottomrule\end{longtable}
+
+\clearpage
+\section{Kaw 2.13: criterio de esfuerzo máximo}\label{ej:kaw_2_13}
+\textbf{Fuente:} Kaw (2006), Ejemplo 2.13, p.~140.
+
+\paragraph{Planteamiento.} Se busca el mayor $S>0$ tal que la lámina a 60\ensuremath{^\circ} de grafito/epóxica resista $\sigma_x=2S$, $\sigma_y=-3S$, $\tau_{xy}=4S$ según el criterio de esfuerzo máximo.
+
+\paragraph{Solución.}
+\textit{Paso 1.} Esfuerzos locales por unidad de $S$.
+\begin{align*}
+&\{\sigma\}_{12}=[T]\{2,-3,4\}^T S \\
+&\{\sigma\}_{12}=\begin{bmatrix}1.714 \\ -2.714 \\ -4.165\end{bmatrix}S
+\end{align*}
+\textit{Paso 2.} Cada componente se compara con su resistencia según el signo; manda la menor razón.
+\begin{align*}
+&S=\min\Big(\frac{X_t \text{ o } X_c}{|\sigma_1|},\frac{Y_t \text{ o } Y_c}{|\sigma_2|},\frac{S_{12}}{|\tau_{12}|}\Big) \\
+&S=16.33\ \mathrm{MPa}\ \text{(modo S: cortante en el plano)}
+\end{align*}
+\paragraph{Comparación con el libro.}
+\begin{longtable}{lrrrc}\toprule Magnitud & Libro & Calculado & Dif. (\%) & \\ \midrule\endhead
+$S$ [$\mathrm{Pa}$] & $1.633\times10^{7}$ & $1.633\times10^{7}$ & 0.02 & \checkmark \\
+$\sigma_x^{\text{falla}}$ [$\mathrm{Pa}$] & $3.266\times10^{7}$ & $3.265\times10^{7}$ & 0.02 & \checkmark \\
+$\sigma_y^{\text{falla}}$ [$\mathrm{Pa}$] & $-4.899\times10^{7}$ & $-4.898\times10^{7}$ & 0.02 & \checkmark \\
+$\tau_{xy}^{\text{falla}}$ [$\mathrm{Pa}$] & $6.532\times10^{7}$ & $6.531\times10^{7}$ & 0.02 & \checkmark \\
+\bottomrule\end{longtable}
+
+\clearpage
+\section{Kaw 2.14 y Tabla 2.3: resistencia a cortante fuera de ejes}\label{ej:kaw_2_14}
+\textbf{Fuente:} Kaw (2006), Ejemplo 2.14 y Tabla 2.3, p.~141.
+
+\paragraph{Planteamiento.} Se pide la resistencia a cortante de láminas de grafito/epóxica a distintos ángulos con el criterio de esfuerzo máximo, distinguiendo cortante positivo y negativo.
+
+\paragraph{Solución.}
+\begin{center}\fbox{\parbox{0.9\linewidth}{\centering\small [Imagen: Kaw (2006), Figura 2.31, p. 142 — cortante positivo y negativo sobre una lámina en ángulo]}}\end{center}
+
+\textit{Paso 1.} Para cortante puro $\tau$ los esfuerzos locales son $\sigma_1=2sc\,\tau$, $\sigma_2=-2sc\,\tau$, $\tau_{12}=(c^2-s^2)\tau$. El signo de $\tau$ decide si la matriz trabaja a tensión o a compresión transversal.
+\begin{align*}
+&\tau_{\text{adm}}^{\pm}=\mathrm{SR}\big([T]\{0,0,\pm1\}^T\big)
+\end{align*}
+\textit{Paso 2.} Resultados en MPa (entre paréntesis el modo de falla).
+\begin{align*}
+&0^\circ: & \ 68.00\ (S) & 68.00\ (S) \\ &15^\circ: & \ 78.52\ (S) & 78.52\ (S) \\ &30^\circ: & \ 136.0\ (S) & 46.19\ (2T) \\ &45^\circ: & \ 246.0\ (2C) & 40.00\ (2T) \\ &60^\circ: & \ 136.0\ (S) & 46.19\ (2T) \\ &75^\circ: & \ 78.52\ (S) & 78.52\ (S) \\ &90^\circ: & \ 68.00\ (S) & 68.00\ (S)
+\end{align*}
+\paragraph{Comparación con el libro.}
+\begin{longtable}{lrrrc}\toprule Magnitud & Libro & Calculado & Dif. (\%) & \\ \midrule\endhead
+$\tau^+_{0}$ [$\mathrm{Pa}$] & $6.800\times10^{7}$ & $6.800\times10^{7}$ & 0.00 & \checkmark \\
+$\tau^-_{0}$ [$\mathrm{Pa}$] & $6.800\times10^{7}$ & $6.800\times10^{7}$ & 0.00 & \checkmark \\
+$\tau^+_{15}$ [$\mathrm{Pa}$] & $7.852\times10^{7}$ & $7.852\times10^{7}$ & 0.00 & \checkmark \\
+$\tau^-_{15}$ [$\mathrm{Pa}$] & $7.852\times10^{7}$ & $7.852\times10^{7}$ & 0.00 & \checkmark \\
+$\tau^+_{30}$ [$\mathrm{Pa}$] & $1.360\times10^{8}$ & $1.360\times10^{8}$ & 0.00 & \checkmark \\
+$\tau^-_{30}$ [$\mathrm{Pa}$] & $4.619\times10^{7}$ & $4.619\times10^{7}$ & 0.00 & \checkmark \\
+$\tau^+_{45}$ [$\mathrm{Pa}$] & $2.460\times10^{8}$ & $2.460\times10^{8}$ & 0.00 & \checkmark \\
+$\tau^-_{45}$ [$\mathrm{Pa}$] & $4.000\times10^{7}$ & $4.000\times10^{7}$ & 0.00 & \checkmark \\
+$\tau^+_{60}$ [$\mathrm{Pa}$] & $1.360\times10^{8}$ & $1.360\times10^{8}$ & 0.00 & \checkmark \\
+$\tau^-_{60}$ [$\mathrm{Pa}$] & $4.619\times10^{7}$ & $4.619\times10^{7}$ & 0.00 & \checkmark \\
+$\tau^+_{75}$ [$\mathrm{Pa}$] & $7.852\times10^{7}$ & $7.852\times10^{7}$ & 0.00 & \checkmark \\
+$\tau^-_{75}$ [$\mathrm{Pa}$] & $7.852\times10^{7}$ & $7.852\times10^{7}$ & 0.00 & \checkmark \\
+$\tau^+_{90}$ [$\mathrm{Pa}$] & $6.800\times10^{7}$ & $6.800\times10^{7}$ & 0.00 & \checkmark \\
+$\tau^-_{90}$ [$\mathrm{Pa}$] & $6.800\times10^{7}$ & $6.800\times10^{7}$ & 0.00 & \checkmark \\
+\bottomrule\end{longtable}
+
+\clearpage
+\section{Kaw 2.17: criterio de deformación máxima}\label{ej:kaw_2_17}
+\textbf{Fuente:} Kaw (2006), Ejemplo 2.17, p.~147.
+
+\paragraph{Planteamiento.} Mismo estado de esfuerzos que en 2.13, ahora con el criterio de deformación máxima.
+
+\paragraph{Solución.}
+\textit{Paso 1.} Deformaciones últimas suponiendo respuesta lineal hasta la falla.
+\begin{align*}
+&\varepsilon_{1}^{T,C}=\frac{X_{t,c}}{E_1},\ \varepsilon_2^{T,C}=\frac{Y_{t,c}}{E_2},\ \gamma_{12}^{u}=\frac{S_{12}}{G_{12}} \\
+&\varepsilon_1^T=0.008287, \varepsilon_1^C=0.008287, \varepsilon_2^T=0.003883, \varepsilon_2^C=0.02388, \gamma_{12}^u=0.009484
+\end{align*}
+\textit{Paso 2.} Se comparan las deformaciones locales $[S]\{\sigma\}_{12}$ con sus límites.
+\begin{align*}
+&S=16.33\ \mathrm{MPa}\ (\text{modo S})
+\end{align*}
+\paragraph{Comparación con el libro.}
+\begin{longtable}{lrrrc}\toprule Magnitud & Libro & Calculado & Dif. (\%) & \\ \midrule\endhead
+$e1T$  & $0.008287$ & $0.008287$ & 0.00 & \checkmark \\
+$e1C$  & $0.008287$ & $0.008287$ & 0.00 & \checkmark \\
+$e2T$  & $0.003883$ & $0.003883$ & 0.01 & \checkmark \\
+$e2C$  & $0.02388$ & $0.02388$ & 0.01 & \checkmark \\
+$g12$  & $0.009483$ & $0.009484$ & 0.01 & \checkmark \\
+$S$ [$\mathrm{Pa}$] & $1.633\times10^{7}$ & $1.633\times10^{7}$ & 0.02 & \checkmark \\
+\bottomrule\end{longtable}
+
+\clearpage
+\section{Kaw 2.18: criterio de Tsai-Hill y su versión modificada}\label{ej:kaw_2_18}
+\textbf{Fuente:} Kaw (2006), Ejemplo 2.18, p.~151.
+
+\paragraph{Planteamiento.} Mismo estado de esfuerzos que en 2.13 con Tsai-Hill; después con resistencias elegidas según el signo.
+
+\paragraph{Solución.}
+\textit{Paso 1.} Tsai-Hill original usa solo resistencias a tensión.
+\begin{align*}
+&\Big(\frac{\sigma_1}{X}\Big)^2-\frac{\sigma_1\sigma_2}{X^2}+\Big(\frac{\sigma_2}{Y}\Big)^2+\Big(\frac{\tau_{12}}{S}\Big)^2=\frac{1}{\mathrm{SR}^2} \\
+&S=10.94\ \mathrm{MPa}
+\end{align*}
+\textit{Paso 2.} La versión modificada toma $X$ y $Y$ de tensión o compresión según el signo de cada esfuerzo; como $\sigma_2<0$, usa $Y_c=246$ MPa y el resultado se acerca al de esfuerzo máximo.
+\begin{align*}
+&S=16.06\ \mathrm{MPa}
+\end{align*}
+\paragraph{Comparación con el libro.}
+\begin{longtable}{lrrrc}\toprule Magnitud & Libro & Calculado & Dif. (\%) & \\ \midrule\endhead
+$S_{\text{TH}}$ [$\mathrm{Pa}$] & $1.094\times10^{7}$ & $1.094\times10^{7}$ & 0.02 & \checkmark \\
+$S_{\text{TH mod}}$ [$\mathrm{Pa}$] & $1.606\times10^{7}$ & $1.606\times10^{7}$ & 0.00 & \checkmark \\
+\bottomrule\end{longtable}
+
+\clearpage
+\section{Kaw 2.19: criterio de Tsai-Wu}\label{ej:kaw_2_19}
+\textbf{Fuente:} Kaw (2006), Ejemplo 2.19, p.~157.
+
+\paragraph{Planteamiento.} Mismo estado de esfuerzos que en 2.13 con Tsai-Wu y tres formas de estimar $H_{12}$.
+
+\paragraph{Solución.}
+\textit{Paso 1.} Coeficientes de resistencia.
+\begin{align*}
+&H_1=\frac{1}{X_t}-\frac{1}{X_c},\ H_2=\frac{1}{Y_t}-\frac{1}{Y_c},\ H_{11}=\frac{1}{X_tX_c},\ H_{22}=\frac{1}{Y_tY_c} \\
+&H_{66}=\frac{1}{S^2},\ H_{12}=-\tfrac12\sqrt{H_{11}H_{22}} \\
+&H_{2}=2.093\times10^{-8},\ H_{11}=4.444\times10^{-19},\ H_{22}=1.016\times10^{-16},\ H_{66}=2.163\times10^{-16} \\
+&H_{12}=-3.360\times10^{-18}
+\end{align*}
+\textit{Paso 2.} Con $\{\sigma\}=\mathrm{SR}\{\sigma\}_0$ el criterio se vuelve cuadrático en SR.
+\begin{align*}
+&a\,\mathrm{SR}^2+b\,\mathrm{SR}=1,\ a=H_{11}\sigma_1^2+H_{22}\sigma_2^2+H_{66}\tau_{12}^2+2H_{12}\sigma_1\sigma_2 \\
+&b=H_1\sigma_1+H_2\sigma_2 \\
+&S_{\text{MH}}=22.39,\ S_{\text{TH}}=22.49,\ S_{\text{Hoff}}=22.49\ \mathrm{MPa}
+\end{align*}
+Resumen para este estado de esfuerzos: esfuerzo máximo y deformación máxima dan 16.33 MPa; Tsai-Hill, 10.94 MPa; Tsai-Hill modificado, 16.06 MPa; Tsai-Wu, 22.39 MPa. La elección del criterio cambia el margen hasta en un factor de dos, lo que justifica reportar el criterio usado.
+
+\paragraph{Comparación con el libro.}
+\begin{longtable}{lrrrc}\toprule Magnitud & Libro & Calculado & Dif. (\%) & \\ \midrule\endhead
+$H_{2}$  & $2.093\times10^{-8}$ & $2.093\times10^{-8}$ & 0.02 & \checkmark \\
+$H_{11}$  & $4.444\times10^{-19}$ & $4.444\times10^{-19}$ & 0.00 & \checkmark \\
+$H_{22}$  & $1.016\times10^{-16}$ & $1.016\times10^{-16}$ & 0.01 & \checkmark \\
+$H_{66}$  & $2.163\times10^{-16}$ & $2.163\times10^{-16}$ & 0.00 & \checkmark \\
+$H_{12}$  & $-3.360\times10^{-18}$ & $-3.360\times10^{-18}$ & 0.01 & \checkmark \\
+$SR\_MH$ [$\mathrm{Pa}$] & $2.239\times10^{7}$ & $2.239\times10^{7}$ & 0.01 & \checkmark \\
+$SR\_TH$ [$\mathrm{Pa}$] & $2.249\times10^{7}$ & $2.249\times10^{7}$ & 0.00 & \checkmark \\
+$SR\_HOF$ [$\mathrm{Pa}$] & $2.249\times10^{7}$ & $2.249\times10^{7}$ & 0.00 & \checkmark \\
+\bottomrule\end{longtable}
+
+\clearpage
+\section{Kaw 2.20: expansión térmica y por humedad de una lámina a 60\ensuremath{^\circ}}\label{ej:kaw_2_20}
+\textbf{Fuente:} Kaw (2006), Ejemplo 2.20, p.~165.
+
+\paragraph{Planteamiento.} Para vidrio/epóxica a 60\ensuremath{^\circ} se piden los coeficientes globales de expansión térmica y por humedad y las deformaciones libres con $\Delta T=-100\,^\circ$C y $\Delta C=0.02$ kg/kg.
+
+\paragraph{Solución.}
+\textit{Paso 1.} Los coeficientes se transforman como deformaciones.
+\begin{align*}
+&\{\alpha_x,\alpha_y,\alpha_{xy}/2\}^T=[T]^{-1}\{\alpha_1,\alpha_2,0\}^T \\
+&\{\alpha\}_{xy}=\begin{bmatrix}18.72 \\ 11.98 \\ -11.69\end{bmatrix}\times10^{-6}/^\circ\mathrm{C} \\
+&\{\beta\}_{xy}=\begin{bmatrix}0.4500 \\ 0.1500 \\ -0.5196\end{bmatrix}
+\end{align*}
+\textit{Paso 2.} Deformación libre higrotérmica.
+\begin{align*}
+&\{\varepsilon\}=\{\alpha\}\Delta T+\{\beta\}\Delta C \\
+&\{\varepsilon\}=\begin{bmatrix}0.007127 \\ 0.001803 \\ -0.009223\end{bmatrix}
+\end{align*}
+\paragraph{Comparación con el libro.}
+\begin{longtable}{lrrrc}\toprule Magnitud & Libro & Calculado & Dif. (\%) & \\ \midrule\endhead
+$\alpha_x$  & $1.873\times10^{-5}$ & $1.872\times10^{-5}$ & 0.03 & \checkmark \\
+$\alpha_y$  & $1.198\times10^{-5}$ & $1.198\times10^{-5}$ & 0.04 & \checkmark \\
+$\alpha_{xy}$  & $-1.169\times10^{-5}$ & $-1.169\times10^{-5}$ & 0.01 & \checkmark \\
+$\beta_x$  & $0.4500$ & $0.4500$ & 0.00 & \checkmark \\
+$\beta_y$  & $0.1500$ & $0.1500$ & 0.00 & \checkmark \\
+$\beta_{xy}$  & $-0.5196$ & $-0.5196$ & 0.00 & \checkmark \\
+$\varepsilon_x$  & $0.007127$ & $0.007127$ & 0.01 & \checkmark \\
+$\varepsilon_y$  & $0.001802$ & $0.001803$ & 0.03 & \checkmark \\
+$\gamma_{xy}$  & $-0.009223$ & $-0.009223$ & 0.00 & \checkmark \\
+\bottomrule\end{longtable}
+
+\clearpage
+\section{Kaw 4.1: deformaciones en la cara superior de un laminado}\label{ej:kaw_4_1}
+\textbf{Fuente:} Kaw (2006), Ejemplo 4.1, p.~324.
+
+\paragraph{Planteamiento.} Dadas las deformaciones del plano medio y las curvaturas de un laminado de 0.010 in, se piden las deformaciones globales en su cara superior.
+
+\paragraph{Solución.}
+\textit{Paso 1.} Variación lineal de la deformación en el espesor (hipótesis de Kirchhoff); la cara superior está en $z=-h/2=-0.005$ in.
+\begin{align*}
+&\{\varepsilon\}=\{\varepsilon^0\}+z\{\kappa\} \\
+&\{\varepsilon\}=\begin{bmatrix}-7074 \\ -2523 \\ 7740\end{bmatrix}\ \mu\mathrm{in/in}
+\end{align*}
+\paragraph{Comparación con el libro.}
+\begin{longtable}{lrrrc}\toprule Magnitud & Libro & Calculado & Dif. (\%) & \\ \midrule\endhead
+$\varepsilon_x$  & $-0.007074$ & $-0.007074$ & 0.00 & \checkmark \\
+$\varepsilon_y$  & $-0.002524$ & $-0.002523$ & 0.02 & \checkmark \\
+$\gamma_{xy}$  & $0.007740$ & $0.007740$ & 0.00 & \checkmark \\
+\bottomrule\end{longtable}
+
+\clearpage
+\section{Kaw 4.2: matrices [A], [B] y [D] de un laminado [0/30/-45]}\label{ej:kaw_4_2}
+\textbf{Fuente:} Kaw (2006), Ejemplo 4.2, p.~332.
+
+\paragraph{Planteamiento.} Laminado de tres capas de grafito/epóxica de 5 mm, orientadas 0\ensuremath{^\circ}, 30\ensuremath{^\circ} y \ensuremath{-}45\ensuremath{^\circ} de arriba hacia abajo.
+
+\paragraph{Solución.}
+\begin{center}\fbox{\parbox{0.9\linewidth}{\centering\small [Imagen: Kaw (2006), Figura 4.7, p. 332 — espesores y coordenadas z de las capas]}}\end{center}
+
+\textit{Paso 1.} Coordenadas de las caras de las capas medidas desde el plano medio (positivas hacia abajo).
+\begin{align*}
+&h_0=-\tfrac{h}{2},\ h_k=h_{k-1}+t_k \\
+&h=\begin{bmatrix}-0.007500 \\ -0.002500 \\ 0.002500 \\ 0.007500\end{bmatrix}\ \mathrm{m}
+\end{align*}
+\textit{Paso 2.} Rigidez transformada de cada capa.
+\begin{align*}
+&[\bar Q]_k=[T]^{-1}[Q][R][T][R]^{-1} \\
+&[\bar Q]_{0^\circ}=\begin{bmatrix}181.8 & 2.897 & 0 \\ 2.897 & 10.35 & 0 \\ 0 & 0 & 7.170\end{bmatrix} \\
+&[\bar Q]_{30^\circ}=\begin{bmatrix}109.4 & 32.46 & 54.19 \\ 32.46 & 23.65 & 20.05 \\ 54.19 & 20.05 & 36.74\end{bmatrix} \\
+&[\bar Q]_{-45^\circ}=\begin{bmatrix}56.66 & 42.32 & -42.87 \\ 42.32 & 56.66 & -42.87 \\ -42.87 & -42.87 & 46.59\end{bmatrix}\ \mathrm{GPa}
+\end{align*}
+\textit{Paso 3.} Integración por capas.
+\begin{align*}
+&A_{ij}=\sum_k \bar Q_{ij,k}(h_k-h_{k-1}),\ B_{ij}=\tfrac12\sum_k \bar Q_{ij,k}(h_k^2-h_{k-1}^2) \\
+&D_{ij}=\tfrac13\sum_k \bar Q_{ij,k}(h_k^3-h_{k-1}^3) \\
+&[A]=\begin{bmatrix}1.739\times10^{9} & 3.884\times10^{8} & 5.663\times10^{7} \\ 3.884\times10^{8} & 4.533\times10^{8} & -1.141\times10^{8} \\ 5.663\times10^{7} & -1.141\times10^{8} & 4.525\times10^{8}\end{bmatrix}\ \mathrm{Pa\,m} \\
+&[B]=\begin{bmatrix}-3.129\times10^{6} & 9.855\times10^{5} & -1.072\times10^{6} \\ 9.855\times10^{5} & 1.158\times10^{6} & -1.072\times10^{6} \\ -1.072\times10^{6} & -1.072\times10^{6} & 9.855\times10^{5}\end{bmatrix}\ \mathrm{Pa\,m^2} \\
+&[D]=\begin{bmatrix}33432 & 6461 & -5240 \\ 6461 & 9320 & -5596 \\ -5240 & -5596 & 7663\end{bmatrix}\ \mathrm{Pa\,m^3}
+\end{align*}
+\paragraph{Comparación con el libro.}
+\begin{longtable}{lrrrc}\toprule Magnitud & Libro & Calculado & Dif. (\%) & \\ \midrule\endhead
+$A_{11}$ [$\mathrm{Pa\,m}$] & $1.739\times10^{9}$ & $1.739\times10^{9}$ & 0.01 & \checkmark \\
+$A_{12}$ [$\mathrm{Pa\,m}$] & $3.884\times10^{8}$ & $3.884\times10^{8}$ & 0.00 & \checkmark \\
+$A_{16}$ [$\mathrm{Pa\,m}$] & $5.663\times10^{7}$ & $5.663\times10^{7}$ & 0.01 & \checkmark \\
+$A_{22}$ [$\mathrm{Pa\,m}$] & $4.533\times10^{8}$ & $4.533\times10^{8}$ & 0.01 & \checkmark \\
+$A_{26}$ [$\mathrm{Pa\,m}$] & $-1.141\times10^{8}$ & $-1.141\times10^{8}$ & 0.03 & \checkmark \\
+$A_{66}$ [$\mathrm{Pa\,m}$] & $4.525\times10^{8}$ & $4.525\times10^{8}$ & 0.00 & \checkmark \\
+$B_{11}$ [$\mathrm{Pa\,m^2}$] & $-3.129\times10^{6}$ & $-3.129\times10^{6}$ & 0.01 & \checkmark \\
+$B_{12}$ [$\mathrm{Pa\,m^2}$] & $9.855\times10^{5}$ & $9.855\times10^{5}$ & 0.00 & \checkmark \\
+$B_{16}$ [$\mathrm{Pa\,m^2}$] & $-1.072\times10^{6}$ & $-1.072\times10^{6}$ & 0.03 & \checkmark \\
+$B_{22}$ [$\mathrm{Pa\,m^2}$] & $1.158\times10^{6}$ & $1.158\times10^{6}$ & 0.02 & \checkmark \\
+$B_{26}$ [$\mathrm{Pa\,m^2}$] & $-1.072\times10^{6}$ & $-1.072\times10^{6}$ & 0.03 & \checkmark \\
+$B_{66}$ [$\mathrm{Pa\,m^2}$] & $9.855\times10^{5}$ & $9.855\times10^{5}$ & 0.00 & \checkmark \\
+$D_{11}$ [$\mathrm{Pa\,m^3}$] & $33430$ & $33432$ & 0.01 & \checkmark \\
+$D_{12}$ [$\mathrm{Pa\,m^3}$] & $6461$ & $6461$ & 0.00 & \checkmark \\
+$D_{16}$ [$\mathrm{Pa\,m^3}$] & $-5240$ & $-5240$ & 0.01 & \checkmark \\
+$D_{22}$ [$\mathrm{Pa\,m^3}$] & $9320$ & $9320$ & 0.00 & \checkmark \\
+$D_{26}$ [$\mathrm{Pa\,m^3}$] & $-5596$ & $-5596$ & 0.00 & \checkmark \\
+$D_{66}$ [$\mathrm{Pa\,m^3}$] & $7663$ & $7663$ & 0.00 & \checkmark \\
+\bottomrule\end{longtable}
+\begin{itemize}\small
+\item $B_{16}$: La matriz impresa en 4.2 muestra -1.972e6; el ejemplo 4.3 usa -1.072e6 (errata).
+\end{itemize}
+
+\clearpage
+\section{Kaw 4.3: respuesta del laminado [0/30/-45] a $N_x=N_y=1000$ N/m}\label{ej:kaw_4_3}
+\textbf{Fuente:} Kaw (2006), Ejemplo 4.3 y Tablas 4.1-4.4, p.~335.
+
+\paragraph{Planteamiento.} Con el laminado del ejemplo 4.2 se piden deformaciones y curvaturas del plano medio, esfuerzos en la cara superior de la capa a 30\ensuremath{^\circ} y la fracción de $N_x$ que toma cada capa.
+
+\paragraph{Solución.}
+\textit{Paso 1.} Sistema acoplado de seis ecuaciones.
+\begin{align*}
+&\begin{Bmatrix}N\\M\end{Bmatrix}=\begin{bmatrix}A&B\\B&D\end{bmatrix}\begin{Bmatrix}\varepsilon^0\\\kappa\end{Bmatrix} \\
+&\{\varepsilon^0\}=\begin{bmatrix}3.123\times10^{-7} \\ 3.492\times10^{-6} \\ -7.598\times10^{-7}\end{bmatrix} \\
+&\{\kappa\}=\begin{bmatrix}2.971\times10^{-5} \\ -3.285\times10^{-4} \\ 4.101\times10^{-4}\end{bmatrix}\ \mathrm{1/m}
+\end{align*}
+\textit{Paso 2.} Cara superior de la capa a 30\ensuremath{^\circ} ($z=-0.0025$ m): deformación total, esfuerzo global y paso a ejes locales.
+\begin{align*}
+&\{\varepsilon\}=\{\varepsilon^0\}+z\{\kappa\},\ \{\sigma\}_{xy}=[\bar Q]\{\varepsilon\} \\
+&\{\sigma\}_{12}=[T]\{\sigma\}_{xy} \\
+&\{\varepsilon\}_{xy}=\begin{bmatrix}2.380\times10^{-7} \\ 4.313\times10^{-6} \\ -1.785\times10^{-6}\end{bmatrix} \\
+&\{\sigma\}_{xy}=\begin{bmatrix}69297 \\ 73914 \\ 33808\end{bmatrix} \\
+&\{\varepsilon\}_{12}=\begin{bmatrix}4.837\times10^{-7} \\ 4.067\times10^{-6} \\ 2.636\times10^{-6}\end{bmatrix} \\
+&\{\sigma\}_{12}=\begin{bmatrix}99730 \\ 43482 \\ 18903\end{bmatrix}\ \mathrm{Pa}
+\end{align*}
+\textit{Paso 3.} Como el esfuerzo varía linealmente dentro de cada capa, su aporte a $N_x$ es el esfuerzo en el plano medio de la capa por su espesor.
+\begin{align*}
+&N_{x,k}=\sigma_{x,k}^{\text{medio}}\,t_k \\
+&N_{x,0^\circ}=223.2,\ N_{x,30^\circ}=531.7,\ N_{x,-45^\circ}=245.1\ \mathrm{N/m}
+\end{align*}
+\paragraph{Comparación con el libro.}
+\begin{longtable}{lrrrc}\toprule Magnitud & Libro & Calculado & Dif. (\%) & \\ \midrule\endhead
+$\varepsilon^0_x$  & $3.123\times10^{-7}$ & $3.123\times10^{-7}$ & 0.00 & \checkmark \\
+$\varepsilon^0_y$  & $3.492\times10^{-6}$ & $3.492\times10^{-6}$ & 0.01 & \checkmark \\
+$\gamma^0_{xy}$  & $-7.598\times10^{-7}$ & $-7.598\times10^{-7}$ & 0.01 & \checkmark \\
+$\kappa_x$  & $2.971\times10^{-5}$ & $2.971\times10^{-5}$ & 0.01 & \checkmark \\
+$\kappa_y$  & $-3.285\times10^{-4}$ & $-3.285\times10^{-4}$ & 0.00 & \checkmark \\
+$\kappa_{xy}$  & $4.101\times10^{-4}$ & $4.101\times10^{-4}$ & 0.01 & \checkmark \\
+$\varepsilon_x^{30,\text{sup}}$  & $2.380\times10^{-7}$ & $2.380\times10^{-7}$ & 0.00 & \checkmark \\
+$\varepsilon_y^{30,\text{sup}}$  & $4.313\times10^{-6}$ & $4.313\times10^{-6}$ & 0.00 & \checkmark \\
+$\varepsilon_xy^{30,\text{sup}}$  & $-1.785\times10^{-6}$ & $-1.785\times10^{-6}$ & 0.01 & \checkmark \\
+$\sigma_x^{30,\text{sup}}$  & $69300$ & $69297$ & 0.00 & \checkmark \\
+$\sigma_y^{30,\text{sup}}$  & $73910$ & $73914$ & 0.01 & \checkmark \\
+$\sigma_xy^{30,\text{sup}}$  & $33810$ & $33808$ & 0.01 & \checkmark \\
+$\varepsilon_1^{30,\text{sup}}$  & $4.837\times10^{-7}$ & $4.837\times10^{-7}$ & 0.01 & \checkmark \\
+$\varepsilon_2^{30,\text{sup}}$  & $4.067\times10^{-6}$ & $4.067\times10^{-6}$ & 0.01 & \checkmark \\
+$\gamma_{12}^{30,\text{sup}}$  & $2.636\times10^{-6}$ & $2.636\times10^{-6}$ & 0.02 & \checkmark \\
+$\sigma_1^{30,\text{sup}}$  & $99730$ & $99730$ & 0.00 & \checkmark \\
+$\sigma_2^{30,\text{sup}}$  & $43480$ & $43482$ & 0.00 & \checkmark \\
+$\tau_{12}^{30,\text{sup}}$  & $18900$ & $18903$ & 0.02 & \checkmark \\
+$N_{x,0}$ [$\mathrm{N/m}$] & $223.2$ & $223.2$ & 0.00 & \checkmark \\
+$N_{x,30}$ [$\mathrm{N/m}$] & $531.5$ & $531.7$ & 0.03 & \checkmark \\
+$N_{x,-45}$ [$\mathrm{N/m}$] & $245.2$ & $245.1$ & 0.02 & \checkmark \\
+$\sigma_1^{-45,\text{sup}}$  & $2.586\times10^{5}$ & $2.586\times10^{5}$ & 0.01 & \checkmark \\
+$\sigma_1^{-45,\text{inf}}$  & $-62850$ & $-62848$ & 0.00 & \checkmark \\
+\bottomrule\end{longtable}
+
+\clearpage
+\section{Kaw 4.4: constantes en el plano y a flexión de un laminado [0/90]$_s$}\label{ej:kaw_4_4}
+\textbf{Fuente:} Kaw (2006), Ejemplo 4.4, p.~346.
+
+\paragraph{Planteamiento.} Laminado simétrico de tres capas de grafito/epóxica de 5 mm (0\ensuremath{^\circ}, 90\ensuremath{^\circ}, 0\ensuremath{^\circ}).
+
+\paragraph{Solución.}
+\textit{Paso 1.} Rigideces del laminado.
+\begin{align*}
+&[A]=\begin{bmatrix}1.870\times10^{9} & 4.345\times10^{7} & 0 \\ 4.345\times10^{7} & 1.013\times10^{9} & 0 \\ 0 & 0 & 1.075\times10^{8}\end{bmatrix}\ \mathrm{Pa\,m} \\
+&[D]=\begin{bmatrix}49348 & 814.8 & 0 \\ 814.8 & 4696 & 0 \\ 0 & 0 & 2017\end{bmatrix}\ \mathrm{Pa\,m^3}
+\end{align*}
+\textit{Paso 2.} Constantes en el plano a partir de $[A]^{-1}=[A^*]$.
+\begin{align*}
+&E_x=\frac{1}{hA^*_{11}},\ E_y=\frac{1}{hA^*_{22}},\ G_{xy}=\frac{1}{hA^*_{66}},\ \nu_{xy}=-\frac{A^*_{12}}{A^*_{11}} \\
+&E_x=124.5,\ E_y=67.43,\ G_{xy}=7.170\ \mathrm{GPa},\ \nu_{xy}=0.04292,\ \nu_{yx}=0.02324
+\end{align*}
+\textit{Paso 3.} Constantes a flexión a partir de $[D]^{-1}=[D^*]$; difieren de las del plano porque las capas a 0\ensuremath{^\circ} están lejos del plano medio.
+\begin{align*}
+&E^f_x=\frac{12}{h^3D^*_{11}},\ E^f_y=\frac{12}{h^3D^*_{22}},\ G^f_{xy}=\frac{12}{h^3D^*_{66}} \\
+&\nu^f_{xy}=-\frac{D^*_{12}}{D^*_{11}} \\
+&E^f_x=175.0,\ E^f_y=16.65,\ G^f_{xy}=7.170\ \mathrm{GPa},\ \nu^f_{xy}=0.1735,\ \nu^f_{yx}=0.01651
+\end{align*}
+\paragraph{Comparación con el libro.}
+\begin{longtable}{lrrrc}\toprule Magnitud & Libro & Calculado & Dif. (\%) & \\ \midrule\endhead
+$A_{11}$ [$\mathrm{Pa\,m}$] & $1.870\times10^{9}$ & $1.870\times10^{9}$ & 0.01 & \checkmark \\
+$A_{12}$ [$\mathrm{Pa\,m}$] & $4.345\times10^{7}$ & $4.345\times10^{7}$ & 0.01 & \checkmark \\
+$A_{22}$ [$\mathrm{Pa\,m}$] & $1.013\times10^{9}$ & $1.013\times10^{9}$ & 0.05 & \checkmark \\
+$A_{66}$ [$\mathrm{Pa\,m}$] & $1.076\times10^{8}$ & $1.075\times10^{8}$ & 0.05 & \checkmark \\
+$D_{11}$ [$\mathrm{Pa\,m^3}$] & $49250$ & $49348$ & 0.20 & \checkmark \\
+$D_{12}$ [$\mathrm{Pa\,m^3}$] & $814.8$ & $814.8$ & 0.00 & \checkmark \\
+$D_{22}$ [$\mathrm{Pa\,m^3}$] & $4696$ & $4696$ & 0.00 & \checkmark \\
+$D_{66}$ [$\mathrm{Pa\,m^3}$] & $2017$ & $2017$ & 0.02 & \checkmark \\
+$E_x$  & $1.245\times10^{11}$ & $1.245\times10^{11}$ & 0.03 & \checkmark \\
+$E_y$  & $6.743\times10^{10}$ & $6.743\times10^{10}$ & 0.01 & \checkmark \\
+$G_{xy}$  & $7.170\times10^{9}$ & $7.170\times10^{9}$ & 0.00 & \checkmark \\
+$\nu_{xy}$  & $0.04292$ & $0.04292$ & 0.01 & \checkmark \\
+$\nu_{yx}$  & $0.02323$ & $0.02324$ & 0.04 & \checkmark \\
+$E^f_x$  & $1.750\times10^{11}$ & $1.750\times10^{11}$ & 0.02 & \checkmark \\
+$E^f_y$  & $1.665\times10^{10}$ & $1.665\times10^{10}$ & 0.01 & \checkmark \\
+$G^f_{xy}$  & $7.170\times10^{9}$ & $7.170\times10^{9}$ & 0.00 & \checkmark \\
+$\nu^f_{xy}$  & $0.1735$ & $0.1735$ & 0.00 & \checkmark \\
+$\nu^f_{yx}$  & $0.01651$ & $0.01651$ & 0.00 & \checkmark \\
+\bottomrule\end{longtable}
+
+\clearpage
+\section{Kaw 4.5: esfuerzos residuales térmicos en un laminado [0/90]}\label{ej:kaw_4_5}
+\textbf{Fuente:} Kaw (2006), Ejemplo 4.5, p.~353.
+
+\paragraph{Planteamiento.} Laminado no simétrico de dos capas de grafito/epóxica de 5 mm sometido a $\Delta T=-75\,^\circ$C. Se pide el esfuerzo residual en la cara inferior de la capa a 90\ensuremath{^\circ}.
+
+\paragraph{Solución.}
+\textit{Paso 1.} Fuerzas y momentos térmicos ficticios.
+\begin{align*}
+&\{N^T\}=\Delta T\sum_k[\bar Q]_k\{\alpha\}_k(h_k-h_{k-1}) \\
+&\{M^T\}=\tfrac{\Delta T}{2}\sum_k[\bar Q]_k\{\alpha\}_k(h_k^2-h_{k-1}^2) \\
+&\{N^T\}=\begin{bmatrix}-1.131\times10^{5} \\ -1.131\times10^{5} \\ 0\end{bmatrix}\ \mathrm{N/m} \\
+&\{M^T\}=\begin{bmatrix}-153.8 \\ 153.8 \\ 0\end{bmatrix}\ \mathrm{N}
+\end{align*}
+\textit{Paso 2.} Respuesta del laminado: al no ser simétrico ($[B]\neq0$), el enfriamiento lo curva.
+\begin{align*}
+&\begin{Bmatrix}N^T\\M^T\end{Bmatrix}=\begin{bmatrix}A&B\\B&D\end{bmatrix}\begin{Bmatrix}\varepsilon^0\\\kappa\end{Bmatrix} \\
+&[B]=\begin{bmatrix}-2.143\times10^{6} & 0 & 0 \\ 0 & 2.143\times10^{6} & 0 \\ 0 & 0 & 0\end{bmatrix} \\
+&\{\varepsilon^0\}=\begin{bmatrix}-3.907\times10^{-4} \\ -3.907\times10^{-4} \\ 0\end{bmatrix} \\
+&\{\kappa\}=\begin{bmatrix}-0.1276 \\ 0.1276 \\ 0\end{bmatrix}\ \mathrm{1/m}
+\end{align*}
+\textit{Paso 3.} En la cara inferior de la capa a 90\ensuremath{^\circ}, el esfuerzo lo produce la deformación mecánica: total menos libre.
+\begin{align*}
+&\{\varepsilon^M\}=\{\varepsilon\}-\{\alpha\}\Delta T,\quad \{\sigma\}=[\bar Q]\{\varepsilon^M\} \\
+&\{\varepsilon\}=\begin{bmatrix}-0.001029 \\ 2.475\times10^{-4} \\ 0\end{bmatrix} \\
+&\{\varepsilon^M\}=\begin{bmatrix}6.585\times10^{-4} \\ 2.490\times10^{-4} \\ 0\end{bmatrix} \\
+&\{\sigma\}=\begin{bmatrix}7.535 \\ 47.18 \\ 0\end{bmatrix}\ \mathrm{MPa}
+\end{align*}
+\paragraph{Comparación con el libro.}
+\begin{longtable}{lrrrc}\toprule Magnitud & Libro & Calculado & Dif. (\%) & \\ \midrule\endhead
+$N^T_x$  & $-1.131\times10^{5}$ & $-1.131\times10^{5}$ & 0.02 & \checkmark \\
+$N^T_y$  & $-1.131\times10^{5}$ & $-1.131\times10^{5}$ & 0.02 & \checkmark \\
+$M^T_x$  & $-153.8$ & $-153.8$ & 0.01 & \checkmark \\
+$M^T_y$  & $153.8$ & $153.8$ & 0.01 & \checkmark \\
+$A_{11}$  & $9.608\times10^{8}$ & $9.608\times10^{8}$ & 0.00 & \checkmark \\
+$A_{12}$  & $2.897\times10^{7}$ & $2.897\times10^{7}$ & 0.00 & \checkmark \\
+$A_{66}$  & $7.170\times10^{7}$ & $7.170\times10^{7}$ & 0.00 & \checkmark \\
+$B_{11}$  & $-2.143\times10^{6}$ & $-2.143\times10^{6}$ & 0.01 & \checkmark \\
+$B_{22}$  & $2.143\times10^{6}$ & $2.143\times10^{6}$ & 0.01 & \checkmark \\
+$D_{11}$  & $8007$ & $8007$ & 0.01 & \checkmark \\
+$D_{12}$  & $241.4$ & $241.4$ & 0.00 & \checkmark \\
+$D_{66}$  & $597.5$ & $597.5$ & 0.00 & \checkmark \\
+$\varepsilon^0_x$  & $-3.907\times10^{-4}$ & $-3.907\times10^{-4}$ & 0.00 & \checkmark \\
+$\varepsilon^0_y$  & $-3.907\times10^{-4}$ & $-3.907\times10^{-4}$ & 0.00 & \checkmark \\
+$\kappa_x$  & $-0.1276$ & $-0.1276$ & 0.04 & \checkmark \\
+$\kappa_y$  & $0.1276$ & $0.1276$ & 0.04 & \checkmark \\
+$\varepsilon_x^{\text{inf}}$  & $-0.001029$ & $-0.001029$ & 0.00 & \checkmark \\
+$\varepsilon_y^{\text{inf}}$  & $2.475\times10^{-4}$ & $2.475\times10^{-4}$ & 0.01 & \checkmark \\
+$\varepsilon^M_x$  & $6.585\times10^{-4}$ & $6.585\times10^{-4}$ & 0.01 & \checkmark \\
+$\varepsilon^M_y$  & $2.490\times10^{-4}$ & $2.490\times10^{-4}$ & 0.01 & \checkmark \\
+$\sigma_x^{\text{inf}}$  & $7.535\times10^{6}$ & $7.535\times10^{6}$ & 0.00 & \checkmark \\
+$\sigma_y^{\text{inf}}$  & $4.718\times10^{7}$ & $4.718\times10^{7}$ & 0.01 & \checkmark \\
+\bottomrule\end{longtable}
+
+\clearpage
+\section{Kaw 4.6: coeficientes de expansión de un laminado [0/90]$_s$}\label{ej:kaw_4_6}
+\textbf{Fuente:} Kaw (2006), Ejemplo 4.6, p.~359.
+
+\paragraph{Planteamiento.} Se piden los coeficientes de expansión térmica y por humedad del laminado del ejemplo 4.4.
+
+\paragraph{Solución.}
+\textit{Paso 1.} En un laminado simétrico no hay curvatura; los coeficientes son la deformación del plano medio por unidad de $\Delta T$ o de $\Delta C$.
+\begin{align*}
+&\{\alpha\}=[A]^{-1}\{N^T\}_{\Delta T=1},\quad \{\beta\}=[A]^{-1}\{N^C\}_{\Delta C=1} \\
+&\{N^T\}=\begin{bmatrix}1852 \\ 2673 \\ 0\end{bmatrix} \\
+&\{\alpha\}=\begin{bmatrix}9.303\times10^{-7} \\ 2.600\times10^{-6} \\ 0\end{bmatrix} \\
+&\{N^C\}=\begin{bmatrix}4.842\times10^{7} \\ 7.077\times10^{7} \\ 0\end{bmatrix} \\
+&\{\beta\}=\begin{bmatrix}0.02430 \\ 0.06885 \\ 0\end{bmatrix}
+\end{align*}
+\paragraph{Comparación con el libro.}
+\begin{longtable}{lrrrc}\toprule Magnitud & Libro & Calculado & Dif. (\%) & \\ \midrule\endhead
+$N^T_x$  & $1852$ & $1852$ & 0.02 & \checkmark \\
+$N^T_y$  & $2673$ & $2673$ & 0.02 & \checkmark \\
+$\alpha_x$  & $9.303\times10^{-7}$ & $9.303\times10^{-7}$ & 0.00 & \checkmark \\
+$\alpha_y$  & $2.600\times10^{-6}$ & $2.600\times10^{-6}$ & 0.02 & \checkmark \\
+$N^C_x$  & $4.842\times10^{7}$ & $4.842\times10^{7}$ & 0.00 & \checkmark \\
+$N^C_y$  & $7.077\times10^{7}$ & $7.077\times10^{7}$ & 0.00 & \checkmark \\
+$\beta_x$  & $0.02430$ & $0.02430$ & 0.02 & \checkmark \\
+$\beta_y$  & $0.06885$ & $0.06885$ & 0.00 & \checkmark \\
+\bottomrule\end{longtable}
+
+\clearpage
+\section{Kaw 4.7: alabeo del laminado [0/90] al enfriarse}\label{ej:kaw_4_7}
+\textbf{Fuente:} Kaw (2006), Ejemplo 4.7, p.~363.
+
+\paragraph{Planteamiento.} Con las curvaturas del ejemplo 4.5 se pide la deflexión fuera del plano.
+
+\paragraph{Solución.}
+\textit{Paso 1.} Integrando $\kappa_x=-\partial^2w/\partial x^2$, $\kappa_y=-\partial^2w/\partial y^2$, $\kappa_{xy}=-2\partial^2w/\partial x\partial y$ con $w(0,0)=0$ y pendientes nulas en el origen:
+\begin{align*}
+&w=-\tfrac12\left(\kappa_x x^2+\kappa_y y^2+\kappa_{xy}xy\right) \\
+&w=0.06382\,x^2 - 0.06382\,y^2\quad (\mathrm{m})
+\end{align*}
+La superficie resultante es una silla de montar: es el efecto que se evita con laminados simétricos.
+
+\paragraph{Comparación con el libro.}
+\begin{longtable}{lrrrc}\toprule Magnitud & Libro & Calculado & Dif. (\%) & \\ \midrule\endhead
+$c_{x^2}$ [$\mathrm{1/m}$] & $0.06383$ & $0.06382$ & 0.01 & \checkmark \\
+$c_{y^2}$ [$\mathrm{1/m}$] & $-0.06383$ & $-0.06382$ & 0.01 & \checkmark \\
+\bottomrule\end{longtable}
+
+\clearpage
+\section{Kaw 5.1: laminado cuasi-isótropo [0/\ensuremath{\pm}60]}\label{ej:kaw_5_1}
+\textbf{Fuente:} Kaw (2006), Ejemplo 5.1, p.~374.
+
+\paragraph{Planteamiento.} Se piden $[A]$, $[B]$ y $[D]$ del laminado de grafito/epóxica [0/60/\ensuremath{-}60] con capas de 5 mm y se verifica en qué sentido se comporta como isótropo.
+
+\paragraph{Solución.}
+\textit{Paso 1.} Matrices del laminado.
+\begin{align*}
+&[A]=\begin{bmatrix}1.146\times10^{9} & 3.391\times10^{8} & 0 \\ 3.391\times10^{8} & 1.146\times10^{9} & 0 \\ 0 & 0 & 4.032\times10^{8}\end{bmatrix} \\
+&[B]=\begin{bmatrix}-3.954\times10^{6} & 7.391\times10^{5} & -5.013\times10^{5} \\ 7.391\times10^{5} & 2.476\times10^{6} & -1.355\times10^{6} \\ -5.013\times10^{5} & -1.355\times10^{6} & 7.391\times10^{5}\end{bmatrix} \\
+&[D]=\begin{bmatrix}28069 & 5126 & -2507 \\ 5126 & 17352 & -6774 \\ -2507 & -6774 & 6328\end{bmatrix}
+\end{align*}
+\textit{Paso 2.} En el plano se cumple la condición de isotropía, pero $[B]\neq0$ y $[D]$ no es isótropa: la cuasi-isotropía es solo de membrana.
+\begin{align*}
+&A_{11}=A_{22},\ A_{16}=A_{26}=0,\ A_{66}=\frac{A_{11}-A_{12}}{2} \\
+&\frac{A_{11}-A_{12}}{2}=4.032\times10^{8}=A_{66}=4.032\times10^{8}
+\end{align*}
+\paragraph{Comparación con el libro.}
+\begin{longtable}{lrrrc}\toprule Magnitud & Libro & Calculado & Dif. (\%) & \\ \midrule\endhead
+$A_{11}$ [$\mathrm{Pa\,m}$] & $1.146\times10^{9}$ & $1.146\times10^{9}$ & 0.04 & \checkmark \\
+$A_{12}$ [$\mathrm{Pa\,m}$] & $3.391\times10^{8}$ & $3.391\times10^{8}$ & 0.00 & \checkmark \\
+$A_{22}$ [$\mathrm{Pa\,m}$] & $1.146\times10^{9}$ & $1.146\times10^{9}$ & 0.04 & \checkmark \\
+$A_{66}$ [$\mathrm{Pa\,m}$] & $4.032\times10^{8}$ & $4.032\times10^{8}$ & 0.00 & \checkmark \\
+$B_{11}$ [$\mathrm{Pa\,m^2}$] & $-3.954\times10^{6}$ & $-3.954\times10^{6}$ & 0.00 & \checkmark \\
+$B_{12}$ [$\mathrm{Pa\,m^2}$] & $7.391\times10^{5}$ & $7.391\times10^{5}$ & 0.01 & \checkmark \\
+$B_{16}$ [$\mathrm{Pa\,m^2}$] & $-5.013\times10^{5}$ & $-5.013\times10^{5}$ & 0.01 & \checkmark \\
+$B_{22}$ [$\mathrm{Pa\,m^2}$] & $2.476\times10^{6}$ & $2.476\times10^{6}$ & 0.01 & \checkmark \\
+$B_{26}$ [$\mathrm{Pa\,m^2}$] & $-1.355\times10^{6}$ & $-1.355\times10^{6}$ & 0.01 & \checkmark \\
+$B_{66}$ [$\mathrm{Pa\,m^2}$] & $7.391\times10^{5}$ & $7.391\times10^{5}$ & 0.01 & \checkmark \\
+$D_{11}$ [$\mathrm{Pa\,m^3}$] & $28070$ & $28069$ & 0.00 & \checkmark \\
+$D_{12}$ [$\mathrm{Pa\,m^3}$] & $5126$ & $5126$ & 0.01 & \checkmark \\
+$D_{16}$ [$\mathrm{Pa\,m^3}$] & $-2507$ & $-2507$ & 0.01 & \checkmark \\
+$D_{22}$ [$\mathrm{Pa\,m^3}$] & $17350$ & $17352$ & 0.01 & \checkmark \\
+$D_{26}$ [$\mathrm{Pa\,m^3}$] & $-6774$ & $-6774$ & 0.00 & \checkmark \\
+$D_{66}$ [$\mathrm{Pa\,m^3}$] & $6328$ & $6328$ & 0.00 & \checkmark \\
+\bottomrule\end{longtable}
+
+\clearpage
+\part*{Gay}\addcontentsline{toc}{part}{Gay}
+\section{Gay 19.10: larguero de carbono/epóxica (propiedades y verificación de ruptura)}\label{ej:gay_19_10}
+\textbf{Fuente:} Gay (2015), Aplicación 19.10 (Carbon/Epoxy Wing Spar), partes 1 y 2a, p.~484.
+
+\paragraph{Planteamiento.} Larguero de una superficie de control, de tela balanceada carbono/epóxica ($V_f=45\%$, capa de 0.24 mm). En la zona 1 (patín) actúa $N_x=\pm435$ N/mm con 9 capas, 67\% a 0\ensuremath{^\circ}/90\ensuremath{^\circ} y 33\% a \ensuremath{\pm}45\ensuremath{^\circ}. En la zona 2 (alma) actúa $T_{xy}=-30$ N/mm con 5 capas, 40\% a 0\ensuremath{^\circ}/90\ensuremath{^\circ} y 60\% a \ensuremath{\pm}45\ensuremath{^\circ}. Se piden las propiedades elásticas de ambos laminados y la verificación de ruptura con Tsai-Hill. El pandeo (parte 2b) se resuelve en el Bloque D.
+
+\paragraph{Solución.}
+\begin{center}\fbox{\parbox{0.9\linewidth}{\centering\small [Imagen: Gay (2015), figura del enunciado de 19.10, p. 484 — larguero de 2400 mm, alma de 130 mm, patín de 40 mm, zonas 1 y 2]}}\end{center}
+
+\textit{Paso 1.} Rigidez de la tela a 0\ensuremath{^\circ} y a 45\ensuremath{^\circ} (en Gay, $E_{ij}^{\theta}$). Para tela balanceada $E_\ell=E_t$.
+\begin{align*}
+&\bar E_\ell=\frac{E_x}{1-\nu_{xy}^2},\ E^{0}_{12}=\nu\bar E_\ell \\
+&E^{45}_{11}=\frac{\bar E_\ell+\bar E_t}{4}+\frac{\nu\bar E_\ell+2G}{2} \\
+&E^{45}_{12}=\frac{\bar E_\ell+\bar E_t}{4}-\frac{2G-\nu\bar E_\ell}{2} \\
+&E^{45}_{33}=\frac{\bar E_\ell+\bar E_t}{4}-\frac{\nu\bar E_\ell}{2} \\
+&[\bar Q]_{0}=\begin{bmatrix}54110 & 2435 & 0 \\ 2435 & 54110 & 0 \\ 0 & 0 & 4000\end{bmatrix} \\
+&[\bar Q]_{45}=\begin{bmatrix}32272 & 24272 & 0 \\ 24272 & 32272 & 0 \\ 0 & 0 & 25837\end{bmatrix}\ \mathrm{MPa}
+\end{align*}
+\textit{Paso 2.} Zona 1: mezcla por proporciones de capas (67\% a 0\ensuremath{^\circ}, 33\% a \ensuremath{\pm}45\ensuremath{^\circ}) e inversión para obtener las constantes de membrana.
+\begin{align*}
+&\tfrac1h[A]=\sum_\theta p_\theta[\bar Q]_\theta,\quad h[A]^{-1}\Rightarrow E_x=E_y,\ \nu_{xy},\ G_{xy} \\
+&\tfrac1h[A]=\begin{bmatrix}46903 & 9641 & 0 \\ 9641 & 46903 & 0 \\ 0 & 0 & 11206\end{bmatrix},\ E_x=44921\ \mathrm{MPa},\ \nu_{xy}=0.206
+\end{align*}
+\textit{Paso 3.} Zona 2: mezcla por proporciones de capas (40\% a 0\ensuremath{^\circ}, 60\% a \ensuremath{\pm}45\ensuremath{^\circ}) e inversión para obtener las constantes de membrana.
+\begin{align*}
+&\tfrac1h[A]=\sum_\theta p_\theta[\bar Q]_\theta,\quad h[A]^{-1}\Rightarrow E_x=E_y,\ \nu_{xy},\ G_{xy} \\
+&\tfrac1h[A]=\begin{bmatrix}41007 & 15537 & 0 \\ 15537 & 41007 & 0 \\ 0 & 0 & 17102\end{bmatrix},\ E_x=35120\ \mathrm{MPa},\ \nu_{xy}=0.379
+\end{align*}
+\textit{Paso 4.} Zona 1, patín inferior a compresión: esfuerzo medio y deformaciones de membrana.
+\begin{align*}
+&\sigma_{0x}=\frac{N_x}{h}=\frac{-435}{9\times0.24},\quad \{\varepsilon^0\}=h[A]^{-1}\{\sigma_0\} \\
+&\sigma_{0x}=-201.4\ \mathrm{MPa},\ \{\varepsilon^0\}=\begin{bmatrix}-0.004483 \\ 9.215\times10^{-4} \\ 0\end{bmatrix}
+\end{align*}
+\textit{Paso 5.} Esfuerzos en ejes de la capa y Tsai-Hill (Gay ec. 14.6, con la resistencia de tensión o compresión según el signo). Las capas 0\ensuremath{^\circ}/90\ensuremath{^\circ} fallan primero.
+\begin{align*}
+&\Big(\frac{\sigma_\ell}{X}\Big)^2+\Big(\frac{\sigma_t}{Y}\Big)^2-\frac{\sigma_\ell\sigma_t}{X^2}+\Big(\frac{\tau_{\ell t}}{S}\Big)^2=I^2 \\
+&\{\sigma\}_{0^\circ}=\begin{bmatrix}-240.3 \\ 38.95 \\ 0\end{bmatrix} \\
+&\{\sigma\}_{45^\circ}=\begin{bmatrix}-100.7 \\ -100.7 \\ 21.62\end{bmatrix}\ \mathrm{MPa},\ I_{0}=0.726,\ I_{45}=0.482,\ \text{margen}=\tfrac1{I_0}-1=37.8\%
+\end{align*}
+\textit{Paso 6.} Zona 2, alma a cortante: el \ensuremath{\pm}45\ensuremath{^\circ} convierte el cortante en tensión y compresión a lo largo de las fibras, por eso es la orientación eficiente para almas.
+\begin{align*}
+&\tau_{0xy}=\frac{T_{xy}}{h},\ \gamma_{0xy}=\frac{\tau_{0xy}}{G_{xy}} \\
+&\{\sigma\}_{45^\circ}=[T_{45}][\bar Q]_{45}\{0,0,\gamma_{0xy}\} \\
+&\tau_{0xy}=-25.00\ \mathrm{MPa},\ \gamma_{0xy}=-0.001462,\ \{\sigma\}_{45^\circ}=\begin{bmatrix}-37.77 \\ 37.77 \\ 0\end{bmatrix},\ I_{45}=0.173,\ I_{0}=0.106
+\end{align*}
+\paragraph{Comparación con el libro.}
+\begin{longtable}{lrrrc}\toprule Magnitud & Libro & Calculado & Dif. (\%) & \\ \midrule\endhead
+$\bar Q^{0}_{11}$ [$\mathrm{MPa}$] & $54100$ & $54110$ & 0.02 & \checkmark \\
+$\bar Q^{0}_{12}$ [$\mathrm{MPa}$] & $2435$ & $2435$ & 0.00 & \checkmark \\
+$\bar Q^{0}_{66}$ [$\mathrm{MPa}$] & $4000$ & $4000$ & 0.00 & \checkmark \\
+$\bar Q^{45}_{11}$ [$\mathrm{MPa}$] & $32270$ & $32272$ & 0.01 & \checkmark \\
+$\bar Q^{45}_{12}$ [$\mathrm{MPa}$] & $24270$ & $24272$ & 0.01 & \checkmark \\
+$\bar Q^{45}_{66}$ [$\mathrm{MPa}$] & $25840$ & $25837$ & 0.01 & \checkmark \\
+$A_{11}/h\ (z1)$ [$\mathrm{MPa}$] & $46900$ & $46903$ & 0.01 & \checkmark \\
+$A_{12}/h\ (z1)$ [$\mathrm{MPa}$] & $9640$ & $9641$ & 0.01 & \checkmark \\
+$A_{66}/h\ (z1)$ [$\mathrm{MPa}$] & $11210$ & $11206$ & 0.03 & \checkmark \\
+$E_x\ (z1)$ [$\mathrm{MPa}$] & $44920$ & $44921$ & 0.00 & \checkmark \\
+$\nu_{xy}\ (z1)$  & $0.2000$ & $0.2056$ & 2.78 & \checkmark \\
+$A_{11}/h\ (z2)$ [$\mathrm{MPa}$] & $41010$ & $41007$ & 0.01 & \checkmark \\
+$A_{12}/h\ (z2)$ [$\mathrm{MPa}$] & $15540$ & $15537$ & 0.02 & \checkmark \\
+$A_{66}/h\ (z2)$ [$\mathrm{MPa}$] & $17100$ & $17102$ & 0.01 & \checkmark \\
+$E_x\ (z2)$ [$\mathrm{MPa}$] & $35120$ & $35120$ & 0.00 & \checkmark \\
+$\nu_{xy}\ (z2)$  & $0.3800$ & $0.3789$ & 0.29 & \checkmark \\
+$\sigma_{0x}$ [$\mathrm{MPa}$] & $-202.0$ & $-201.4$ & 0.30 & \checkmark \\
+$\varepsilon_{0x}$  & $-0.004497$ & $-0.004483$ & 0.31 & \checkmark \\
+$\varepsilon_{0y}$  & $9.000\times10^{-4}$ & $9.215\times10^{-4}$ & 2.39 & \checkmark \\
+$\sigma_\ell^{0}$ [$\mathrm{MPa}$] & $-241.0$ & $-240.3$ & 0.28 & \checkmark \\
+$\sigma_t^{0}$ [$\mathrm{MPa}$] & $38.00$ & $38.95$ & 2.49 & \checkmark \\
+$I_{\text{TH}}^{0}\ (z1)$  & $0.7200$ & $0.7256$ & 0.78 & \checkmark \\
+$I_{\text{TH}}^{45}\ (z1)$  & $0.4900$ & $0.4824$ & 1.55 & \checkmark \\
+$\tau_{0xy}\ (z2)$ [$\mathrm{MPa}$] & $-25.00$ & $-25.00$ & 0.00 & \checkmark \\
+$\gamma_{0xy}\ (z2)$  & $-0.001460$ & $-0.001462$ & 0.12 & \checkmark \\
+$\tau^{45}_{xy}\ (z2)$ [$\mathrm{MPa}$] & $-38.00$ & $-37.77$ & 0.61 & \checkmark \\
+$I_{\text{TH}}^{45}\ (z2)$  & $0.1700$ & $0.1735$ & 2.05 & \checkmark \\
+$I_{\text{TH}}^{0}\ (z2)$  & $0.1000$ & $0.1063$ & 6.31 & \checkmark \\
+\bottomrule\end{longtable}
+\begin{itemize}\small
+\item $\nu_{xy}\ (z1)$: El libro redondea a dos cifras.
+\item $\sigma_{0x}$: El libro redondea el esfuerzo medio a -202 MPa antes de seguir.
+\item $\varepsilon_{0y}$: El libro usa $\nu=0.2$ redondeado.
+\item $\sigma_t^{0}$: El libro arrastra el redondeo $\nu=0.2$ y $\varepsilon_{0y}=9\times10^{-4}$.
+\item $I_{\text{TH}}^{0}\ (z2)$: El libro da solo una cifra significativa (0.1).
+\end{itemize}
+
+\clearpage
+\section{Gay 19.14: laminado cuasi-isótropo (fórmulas cerradas contra CLT)}\label{ej:gay_19_14}
+\textbf{Fuente:} Gay (2015), Aplicación 19.14 (Quasi-Isotropic Laminate), p.~499.
+
+\paragraph{Planteamiento.} Laminado simétrico de capas unidireccionales idénticas, 25\% a 0\ensuremath{^\circ}, 90\ensuremath{^\circ}, +45\ensuremath{^\circ} y \ensuremath{-}45\ensuremath{^\circ}. Gay obtiene en forma cerrada los módulos de membrana y demuestra que el laminado es isótropo en su plano. Aquí se evalúan esas fórmulas con la lámina de grafito/epóxica de Kaw y se comparan contra la CLT numérica de un laminado [0/90/45/\ensuremath{-}45]$_s$; sirve como cruce entre libros.
+
+\paragraph{Solución.}
+\textit{Paso 1.} Fórmulas de Gay en términos de $\bar E_\ell=Q_{11}$, $\bar E_t=Q_{22}$, $\nu_{t\ell}\bar E_\ell=Q_{12}$, $G_{\ell t}=Q_{66}$.
+\begin{align*}
+&\tfrac1hA_{11}=\tfrac14\Big[\tfrac32(\bar E_\ell+\bar E_t)+\nu_{t\ell}\bar E_\ell+2G_{\ell t}\Big] \\
+&\tfrac1hA_{12}=\tfrac14\Big[\tfrac12(\bar E_\ell+\bar E_t)+3\nu_{t\ell}\bar E_\ell-2G_{\ell t}\Big] \\
+&\tfrac1hA_{33}=\tfrac14\Big[\tfrac12(\bar E_\ell+\bar E_t)-\nu_{t\ell}\bar E_\ell+2G_{\ell t}\Big] \\
+&E=\frac{A_{11}^2-A_{12}^2}{hA_{11}}=69.68\ \mathrm{GPa},\ \nu=\frac{A_{12}}{A_{11}}=0.2960 \\
+&G=\tfrac1hA_{33}=26.88\ \mathrm{GPa}
+\end{align*}
+\textit{Paso 2.} CLT numérica del laminado [0/90/45/\ensuremath{-}45]$_s$ con capas de 0.125 mm.
+\begin{align*}
+&E_x=69.68,\ E_y=69.68,\ G_{xy}=26.88\ \mathrm{GPa},\ \nu_{xy}=0.2960
+\end{align*}
+Además se cumple $G=E/[2(1+\nu)]$, condición de isotropía en el plano.
+
+\paragraph{Comparación con el libro.}
+\begin{longtable}{lrrrc}\toprule Magnitud & Libro & Calculado & Dif. (\%) & \\ \midrule\endhead
+$E_x\ (\text{CLT vs. Gay})$ [$\mathrm{Pa}$] & $6.968\times10^{10}$ & $6.968\times10^{10}$ & 0.00 & \checkmark \\
+$E_y\ (\text{CLT vs. Gay})$ [$\mathrm{Pa}$] & $6.968\times10^{10}$ & $6.968\times10^{10}$ & 0.00 & \checkmark \\
+$\nu_{xy}\ (\text{CLT vs. Gay})$  & $0.2960$ & $0.2960$ & 0.00 & \checkmark \\
+$G_{xy}\ (\text{CLT vs. Gay})$ [$\mathrm{Pa}$] & $2.688\times10^{10}$ & $2.688\times10^{10}$ & 0.00 & \checkmark \\
+$G\ \text{vs.}\ E/2(1+\nu)$ [$\mathrm{Pa}$] & $2.688\times10^{10}$ & $2.688\times10^{10}$ & 0.00 & \checkmark \\
+\bottomrule\end{longtable}
+
+\clearpage
+\end{document}

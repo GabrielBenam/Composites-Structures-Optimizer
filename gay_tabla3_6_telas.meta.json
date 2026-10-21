@@ -1,0 +1,17 @@
+{
+  "fuente": "Gay, D. (2015). Composite Materials: Design and Applications, 3rd ed., CRC Press. Tabla 3.6, p. 44 (tela balanceada carbono/epóxica, Vf = 45 %).",
+  "unidades": {
+    "E1": "MPa",
+    "G12": "MPa",
+    "Xt": "MPa",
+    "Xc": "MPa (magnitud)",
+    "S": "MPa",
+    "a1": "1/°C",
+    "densidad": "kg/m3"
+  },
+  "base_estadistica": "típica",
+  "notas": [
+    "Tela balanceada: E1 = E2 y resistencias iguales en urdimbre y trama.",
+    "Resistencia a cortante de la tela de carbono: 55 MPa (verificado en la página impresa; 150 MPa corresponde a la de Kevlar)."
+  ]
+}

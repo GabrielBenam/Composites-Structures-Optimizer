@@ -1,0 +1,23 @@
+{
+  "fuente": "Kaw, A. K. (2006). Mechanics of Composite Materials, 2nd ed., CRC Press. Tabla 2.1, p. 106 (que a su vez cita a Tsai y Hahn, Introduction to Composite Materials, tablas 1.7, 7.1 y 8.3).",
+  "unidades": {
+    "E1": "Pa",
+    "E2": "Pa",
+    "G12": "Pa",
+    "Xt": "Pa",
+    "Xc": "Pa (magnitud)",
+    "Yt": "Pa",
+    "Yc": "Pa (magnitud)",
+    "S": "Pa",
+    "a1": "1/°C",
+    "a2": "1/°C",
+    "b1": "m/m/(kg/kg)",
+    "b2": "m/m/(kg/kg)",
+    "vf": "-"
+  },
+  "base_estadistica": "típica (media); no son valores admisibles",
+  "notas": [
+    "Son exactamente los datos de la Tabla 3 de la tesis (vidrio, boro y carbono 181 GPa).",
+    "El grafito/epóxica de 181 GPa corresponde a una fibra de módulo estándar."
+  ]
+}
