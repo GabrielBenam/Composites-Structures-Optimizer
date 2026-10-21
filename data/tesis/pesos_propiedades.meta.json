@@ -1,0 +1,18 @@
+{
+  "fuente": "Paper INAE 2024, Table 4 'Importance of Mechanical Properties'; mismo vector en encabezado de Tesis Tabla 18",
+  "nota_reproduccion": "La Tabla 19 publicada se reproduce aplicando los pesos con el desplazamiento de columna de la tesis. El encabezado de la Tabla 18 muestra 8.47% en la primera columna (no 7.42%) y la densidad suma 10.127% en las celdas publicadas; esos dos valores se usan solo en el modo 'reproduccion_exacta' y su origen se perdió con la Matriz 2.",
+  "pesos_reproduccion_exacta_por_columna_tabla18": {
+    "tensile_strength": 0.0847,
+    "tensile_modulus": 0.017,
+    "tensile_strain": 0.2879,
+    "flexural_strength": 0.3046,
+    "flexural_modulus": 0.1264,
+    "short_beam_shear_strength": 0.0149,
+    "compressive_strength": 0.033,
+    "compressive_modulus": 0.042,
+    "density": 0.10127
+  },
+  "problemas_conocidos": [
+    "shear_modulus (30.46%) e interlaminar_shear_strength (3.30%) no tienen columna en la Tabla 18."
+  ]
+}

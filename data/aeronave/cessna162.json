@@ -1,0 +1,35 @@
+{
+  "modelo": "Cessna 162 (aeronave base de la tesis)",
+  "mtow_kg": 598,
+  "g": 9.81,
+  "semi_envergadura_mm": 4639.09,
+  "cuerda_mm": 1125,
+  "n_texto_tesis": [
+    2.5,
+    3.8
+  ],
+  "b_publicado_N_mm": 3.059,
+  "b_usado_en_ansys_N_mm": 2.012,
+  "factor_carga_larguero_tesis": 1.07,
+  "costilla": {
+    "dist_sustentacion_a_larguero_mm": 21.09,
+    "peso_costilla_N": 31.09,
+    "dist_cg_costilla_mm": 180.86,
+    "dist_larguero_a_larguero_mm": [
+      315.7,
+      180.86
+    ]
+  },
+  "pesos_viga_kg": {
+    "aluminio_zicral": 45.89,
+    "carbono_hm": 14.68
+  },
+  "niu_usd_por_kg": 110,
+  "astm_f2245_limite_por_verificar": {
+    "n_positivo_min": 4.0,
+    "n_negativo_max": -2.0,
+    "factor_seguridad": 1.5,
+    "estado": "VERIFICAR contra la edición vigente de ASTM F2245 antes de usar"
+  },
+  "fuente": "Tesis actualizada 3.docx secc. 6.4, 7.2 y Tabla 25"
+}

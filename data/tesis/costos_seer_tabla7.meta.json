@@ -1,0 +1,9 @@
+{
+  "fuente": "Paper INAE 2024, Table 7 'Total Cost Matrix According to SEER-MFG (USD)'; filas 1-12 en el orden de Tesis Tabla 18 (verificado: reproduce Tablas 22 y 23)",
+  "unidades": "USD por una pieza, incluye herramental y diseño de herramental",
+  "base_estadistica": "estimación paramétrica SEER-MFG, no cotización",
+  "problemas_conocidos": [
+    "Volumen de producción = 1 unidad: el herramental domina (mano de obra 3-5 kUSD).",
+    "El costo de material varía <1.3% dentro de cada proceso aunque el boro cuesta ~30x el carbono."
+  ]
+}

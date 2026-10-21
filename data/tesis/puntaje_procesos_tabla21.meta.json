@@ -1,0 +1,7 @@
+{
+  "fuente": "Tesis Tabla 21 y encabezado de Tabla 23",
+  "base": "QFD con benchmark cualitativo 1-5 (Potter); un solo evaluador",
+  "problemas_conocidos": [
+    "Pultrusión con 5/5 en flexibilidad de geometría y de propiedades, contrario a la literatura (Campbell; Barbero cap. 3.8)."
+  ]
+}
