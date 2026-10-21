@@ -1,0 +1,49 @@
+name: pruebas
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Instalar
+        run: pip install -e ".[dev]"
+      - name: Pruebas
+        run: pytest -q
+      - name: Generar reporte de fase
+        run: python -m cpo.fase0
+      - uses: actions/upload-artifact@v4
+        with:
+          name: resultados-python
+          path: |
+            resultados/
+            docs/fase0_reporte.md
+
+  matlab:
+    needs: python
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: resultados-python
+          path: .
+      - uses: matlab-actions/setup-matlab@v2
+      - name: Pruebas MATLAB y cruce contra Python
+        uses: matlab-actions/run-command@v2
+        with:
+          command: cd matlab; addpath(pwd); addpath('pruebas'); pruebas_fase0; run_fase0
+      - name: Empaquetar ejecutable MATLAB de la fase
+        run: zip -r cpo_matlab.zip matlab data LICENSE README.md
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cpo-matlab
+          path: cpo_matlab.zip
